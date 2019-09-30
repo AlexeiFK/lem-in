@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/09/24 22:39:29 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/09/30 22:17:29 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 
 typedef struct	s_node
 {
-	char		*name;
 	int			id;
+	char		*name;
+	int			x;
+	int			y;
+	char		is_end_start;
 }				t_node;
 
 typedef struct	s_table
 {
-	int			**ls;
+	char		**ls;
 	int			**fls;
+	t_node		**ns;
 }				t_table;
 
 #endif
