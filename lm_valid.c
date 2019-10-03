@@ -6,11 +6,12 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 17:52:16 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/03 21:46:05 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/03 22:37:53 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
+#include "lem_in.h"
 
 int		ft_strisdig(char *str)
 {
@@ -23,7 +24,7 @@ int		ft_strisdig(char *str)
 		return (0);
 	if (str[i] == '-' && str[i + 1] == '\0')
 		return (0);
-3	i++;
+	i++;
 	while (str[i] != '\0')
 	{
 		if (ft_isdigit(str[i]) == 0)
@@ -134,5 +135,5 @@ int		is_comm(char **split, char *str)
 	}
 	if (ft_strequ(split[0], "##end") && (en_flag == 1))
 		return (-1);
-	return (0);
+	return (is_comment(str));
 }

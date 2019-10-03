@@ -6,10 +6,15 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 17:48:50 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/03 17:49:19 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/03 23:15:49 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_error_msg()
+#include "libft.h"
+#include <stdlib.h>
+
+void	ft_error_msg(void)
 {
+	ft_putstr("ERROR\n");
+	exit(0);
 }
