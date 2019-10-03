@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 21:19:23 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/03 23:15:46 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/03 23:46:28 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,17 @@ int		fill_node(t_table *t, char **split, int id, int end_start)
 int		fill_link(t_table *t, char *name1, char *name2)
 {
 	static int	first = 1;
+	int			id1;
+	int			id2;
 
 	if (first)
 	{
 		lm_init_table(t);
-		(void)name1;
-		(void)name2;
 		first = 0;
 	}
+	//TODO find id/ put two 1s in table 
+	(void)name1;
+	(void)name2;
 	return (1);
 }
 
