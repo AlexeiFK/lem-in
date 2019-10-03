@@ -1,38 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.h                                           :+:      :+:    :+:   */
+/*   lm_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/03 21:46:07 by rjeor-mo         ###   ########.fr       */
+/*   Created: 2019/10/03 17:48:50 by rjeor-mo          #+#    #+#             */
+/*   Updated: 2019/10/03 17:49:19 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
-
-# define C_START 1
-# define C_END 2
-# define C_COMMENT 0
-
-typedef struct	s_node
+void	ft_error_msg()
 {
-	int			id;
-	char		*name;
-	int			x;
-	int			y;
-	char		is_end_start;
-}				t_node;
-
-typedef struct	s_table
-{
-	int			n_ants;
-	char		**ls;
-	int			**fls;
-	t_node		*nl;
-	int			size;
-}				t_table;
-
-#endif
+}
