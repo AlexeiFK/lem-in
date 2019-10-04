@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 17:05:49 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/04 21:23:50 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct	s_table
 	t_list		*nl;
 	t_node		**ns;
 	int			size;
+	int			id_start;
+	int			id_end;
 }				t_table;
 
 void	lm_print_flow(t_table *t);
@@ -61,5 +63,15 @@ int		is_valid_node(char **split);
 int		number_of_ants(char **split);
 int		is_comm(char **split, char *str);
 int		lm_init_table(t_table *t);
+
+void	ft_lstadd_l(t_list **alst, t_list *n);
+
+int		ft_is_empty_q(t_list *q);
+int		ft_dequeue_int(t_list **q);
+void	ft_enqueue_int(t_list **q, int id);
+
+int		*ft_bfs(int **fls, int size, int s, int e);
+
+int		lm_find_res(t_table *t);
 
 #endif

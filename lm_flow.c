@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:03:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 17:50:21 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/04 18:17:38 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	fill_flow_sqr(int i, int j, int **fl, int is_linked)
 	{
 		fl[in_i][in_j] = 0;
 		fl[out_i][out_j] = 0;
-		fl[in_i][out_j] = 1;
-		fl[out_i][in_j] = 1;
+		fl[in_i][out_j] = is_linked;
+		fl[out_i][in_j] = is_linked;
 	}
 	else
 	{
@@ -73,7 +73,7 @@ int		**init_flow(int size)
 	return (new);
 }
 
-int		**create_flow(char **ls, int size)
+int		**create_flow(char **ls, int size, int start, int end)
 {
 	int		**new;
 	int		i;
@@ -94,12 +94,15 @@ int		**create_flow(char **ls, int size)
 		}
 		++i;
 	}
+	fill_flow_sqr(start, start, new, 100);///TODO replace with INT_MAX
+	fill_flow_sqr(end, end, new, 100);///TODO replace with INT_MAX
 	return (new);
 }
 
 int		lm_init_flow(t_table *t)
 {
-	t->fls = create_flow(t->ls, t->size);
+	t->fls = create_flow(t->ls, t->size,
+			t->id_start, t->id_end);
 	ft_printf("flow created\n");
 	if (!(t->fls))
 		return (-1);

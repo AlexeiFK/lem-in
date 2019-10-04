@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_lem_in.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_l.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 22:16:24 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 22:39:57 by rjeor-mo         ###   ########.fr       */
+/*   Created: 2019/10/04 18:40:29 by rjeor-mo          #+#    #+#             */
+/*   Updated: 2019/10/04 22:04:52 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-int		main(void)
+void	ft_lstadd_l(t_list **alst, t_list *new)
 {
-	t_table	t;
+	t_list		*tmp;
 
-	t.id_start = -1;
-	t.id_end = -1;
-	lm_read(&t);
-	lm_init_flow(&t);
-	t.id_start *= 2;
-	t.id_end *= 2;
-	t.id_end++;
-	lm_find_res(&t);
-	return (0);
+	if (!alst)
+		return ;
+	tmp = *alst;
+	if (!tmp)
+	{
+		tmp = new;
+		return ;
+	}
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
 }

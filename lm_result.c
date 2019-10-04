@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_lem_in.c                                      :+:      :+:    :+:   */
+/*   lm_result.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 22:16:24 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 22:39:57 by rjeor-mo         ###   ########.fr       */
+/*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
+/*   Updated: 2019/10/04 21:09:31 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "lem_in.h"
 
-int		main(void)
+int		lm_find_res(t_table *t)
 {
-	t_table	t;
-
-	t.id_start = -1;
-	t.id_end = -1;
-	lm_read(&t);
-	lm_init_flow(&t);
-	t.id_start *= 2;
-	t.id_end *= 2;
-	t.id_end++;
-	lm_find_res(&t);
-	return (0);
+	ft_bfs(t->fls, t->size * 2, t->id_start, t->id_end);
+	return (1);
 }
