@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 21:19:23 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/03 23:46:28 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/04 12:40:23 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,26 @@ int		fill_node(t_table *t, char **split, int id, int end_start)
 	return (1);
 }
 
+int		find_id(t_table *t, const char *name)
+{
+	int		i;
+
+	i = 0;
+	while (i < t->size)
+	{
+		if (ft_strequ(name, t->ns[i]->name))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+void	set_link(t_table *t, int id1, int id2)
+{
+	t->ls[id1][id2] = 1;
+	t->ls[id2][id1] = 1;
+}
+
 int		fill_link(t_table *t, char *name1, char *name2)
 {
 	static int	first = 1;
@@ -64,9 +84,10 @@ int		fill_link(t_table *t, char *name1, char *name2)
 		lm_init_table(t);
 		first = 0;
 	}
-	//TODO find id/ put two 1s in table 
-	(void)name1;
-	(void)name2;
+	id1 = find_id(t, name1);
+	id2 = find_id(t, name2);
+	set_link(t, id1, id2);
+	lm_print_table(t);
 	return (1);
 }
 
@@ -79,12 +100,21 @@ void	lm_print_table(t_table *t)
 	size = t->size;
 	i = 0;
 	ft_printf("Number of ants:%d\nSize:%d\n", t->n_ants, size);
+	ft_printf("%10s ", "");
+	while (i < size)
+	{
+		ft_printf("%10s ", t->ns[i]->name);
+		i++;
+	}
+	ft_printf("\n");
+	i = 0;
 	while (i < size)
 	{
 		j = 0;
+		ft_printf("%10s ", t->ns[i]->name);
 		while (j < size)
 		{
-			ft_printf("%d ", t->ls[i][j]);
+			ft_printf("%10d ", t->ls[i][j]);
 			++j;
 		}
 		ft_printf("\n");
@@ -232,9 +262,6 @@ int		lm_read(t_table *t)
 	flag = 0;
 	while (ft_gnl(0, &str, 0) > 0)
 	{
-		//add valid
-		//add free split
-		//detect comments
 		ft_putstr(str);
 		ft_putstr("\n");
 		split = ft_strsplit(str, ' ');
@@ -250,16 +277,20 @@ int		lm_read(t_table *t)
 		{
 			split_free(split);
 			free(str);
+			if (comm_tmp == C_END || comm_tmp == C_START)
+				ft_error_msg();
 			continue ;
 		}
 		if (comm == C_END)
 		{
+			comm_tmp = comm;
 			split_free(split);
 			free(str);
 			continue ;
 		}
 		if (comm == C_START)
 		{
+			comm_tmp = comm;
 			split_free(split);
 			free(str);
 			continue ;
@@ -267,6 +298,9 @@ int		lm_read(t_table *t)
 		if (flag == 0)
 		{
 			ft_printf("read n_ants\n");
+			if (comm_tmp == C_END || comm_tmp == C_START)
+				ft_error_msg();
+			//leak
 			if (lm_read_n_ants(t, split) == -1)
 			{
 				split_free(split);
@@ -285,10 +319,14 @@ int		lm_read(t_table *t)
 				free(str);
 				ft_error_msg();
 			}
+			comm_tmp = 0;
 		}
 		else if (flag == 2)
 		{
 			ft_printf("read links\n");
+			if (comm_tmp == C_END || comm_tmp == C_START)
+				ft_error_msg();
+			//leak
 			if (lm_read_link(t, split) == -1)
 			{
 				split_free(split);

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/03 23:46:32 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/04 12:28:52 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_table
 void	split_free(char **split);
 int		lm_read(t_table *t);
 int		lm_read_link(t_table *t, char **split);
+void	lm_print_table(t_table *t);
 void	ft_error_msg(void);
 int		ft_strisdig(char *str);
 int		split_size(char **split);
