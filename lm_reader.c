@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 21:19:23 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 13:59:45 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:55:24 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,132 +14,83 @@
 #include "libft.h"
 #include "lem_in.h"
 
-int		lm_read_n_ants(t_table *t, char **split)
+int		choose_read(t_table *t, int *flag, char **split, int *comm_tmp)
 {
-	t->n_ants = number_of_ants(split);
-	if (t->n_ants == -1)
-		return (-1);
-	return (1);
-}
-
-int		lm_read_node(t_table *t, char **split, int end_start)
-{
-	static int	id = 0;
-
-	if (is_valid_node(split) == 1)
+	if ((*flag) == 0)
 	{
-		fill_node(t, split, id, end_start);
-		++id;
-	}
-	else
-	{
-		if (lm_read_link(t, split) == 1)
-			return (2);
+		ft_printf("read n_ants\n");
+		if (((*comm_tmp) == C_END) || ((*comm_tmp) == C_START))
+			return (-1);
+		if (lm_read_n_ants(t, split) == -1)
+			return (-1);
 		else
+			(*flag) = 1;
+	}
+	else if ((*flag) == 1)
+	{
+		ft_printf("read nodes\n");
+		if (((*flag) = lm_read_node(t, split, (*comm_tmp))) == -1)
+			return (-1);
+		(*comm_tmp) = 0;
+	}
+	else if ((*flag) == 2)
+	{
+		ft_printf("read links\n");
+		if ((*comm_tmp) == C_END || (*comm_tmp) == C_START)
+			return (-1);
+		if (lm_read_link(t, split) == -1)
 			return (-1);
 	}
-	return (1);
+	return (0);
 }
 
-int		lm_read_link(t_table *t, char **split)
+int		comm_detect(char **split, char *str, int *comm_tmp)
 {
-	char	**l_split;
+	int		comm;
 
-	l_split = is_valid_link(split);
-	if (l_split == NULL)
-		return (-1);
-	fill_link(t, l_split[0], l_split[1]);
-	split_free(l_split);
-	return (1);
+	comm = is_comm(split, str);
+	if (comm == -1)
+		ft_error_free(split, str);
+	if (comm == C_COMMENT)
+	{
+		split_str_free(split, str);
+		if (((*comm_tmp) == C_END) || ((*comm_tmp) == C_START))
+			ft_error_msg();
+		return (1);
+	}
+	if (comm == C_END)
+	{
+		split_str_free(split, str);
+		(*comm_tmp) = comm;
+		return (1);
+	}
+	if (comm == C_START)
+	{
+		split_str_free(split, str);
+		(*comm_tmp) = comm;
+		return (1);
+	}
+	return (0);
 }
 
 int		lm_read(t_table *t)
 {
 	char	*str;
 	char	**split;
-	int		comm;
 	int		comm_tmp;
-	char	flag;
+	int		flag;
 
-	comm = 0;
 	comm_tmp = 0;
 	flag = 0;
 	while (ft_gnl(0, &str, 0) > 0)
 	{
-		ft_putstr(str);
-		ft_putstr("\n");
+		ft_printf("%s\n", str);
 		split = ft_strsplit(str, ' ');
-		comm = is_comm(split, str);
-		ft_printf("comm = %d\n", comm);
-		if (comm == -1)
-		{
-			split_free(split);
-			free(str);
-			ft_error_msg();
-		}
-		if (comm == C_COMMENT)
-		{
-			split_free(split);
-			free(str);
-			if (comm_tmp == C_END || comm_tmp == C_START)
-				ft_error_msg();
+		if (comm_detect(split, str, &comm_tmp))
 			continue ;
-		}
-		if (comm == C_END)
-		{
-			comm_tmp = comm;
-			split_free(split);
-			free(str);
-			continue ;
-		}
-		if (comm == C_START)
-		{
-			comm_tmp = comm;
-			split_free(split);
-			free(str);
-			continue ;
-		}
-		if (flag == 0)
-		{
-			ft_printf("read n_ants\n");
-			if (comm_tmp == C_END || comm_tmp == C_START)
-				ft_error_msg();
-			//leak
-			if (lm_read_n_ants(t, split) == -1)
-			{
-				split_free(split);
-				free(str);
-				ft_error_msg();
-			}
-			else
-				flag = 1;
-		}
-		else if (flag == 1)
-		{
-			ft_printf("read nodes\n");
-			if ((flag = lm_read_node(t, split, comm_tmp)) == -1)
-			{
-				split_free(split);
-				free(str);
-				ft_error_msg();
-			}
-			comm_tmp = 0;
-		}
-		else if (flag == 2)
-		{
-			ft_printf("read links\n");
-			if (comm_tmp == C_END || comm_tmp == C_START)
-				ft_error_msg();
-			//leak
-			if (lm_read_link(t, split) == -1)
-			{
-				split_free(split);
-				free(str);
-				ft_error_msg();
-			}
-		}
-		split_free(split);
-		free(str);
+		if (choose_read(t, &flag, split, &comm_tmp) == -1)
+			ft_error_free(split, str);
+		split_str_free(split, str);
 	}
 	free(str);
 	return (1);

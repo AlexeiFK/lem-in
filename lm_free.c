@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 13:15:15 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 13:58:46 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/04 14:55:36 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ void	split_free(char **split)
 		i++;
 	}
 	free(split);
+}
+
+void	split_str_free(char **split, char *str)
+{
+	if (split)
+		split_free(split);
+	if (str)
+		free(str);
 }
 
 void	lm_delete_node(void *mem, size_t size)
