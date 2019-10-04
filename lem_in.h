@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 15:40:11 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/04 17:05:49 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct	s_table
 	int			size;
 }				t_table;
 
+void	lm_print_flow(t_table *t);
+int		lm_init_flow(t_table *t);
 void	split_free(char **split);
 void	split_str_free(char **split, char *str);
 int		lm_read(t_table *t);
