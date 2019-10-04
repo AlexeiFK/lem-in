@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:03:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 17:38:06 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/04 17:50:21 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-void	fill_flow_node(int i, int j, char **ls, int **fl)
+void	fill_flow_sqr(int i, int j, int **fl, int is_linked)
 {
 	int		in_i;
 	int		out_i;
@@ -25,7 +25,7 @@ void	fill_flow_node(int i, int j, char **ls, int **fl)
 	out_i = in_i + 1;
 	in_j = j * 2;
 	out_j = in_j + 1;
-	if (i == j)
+	if (is_linked)
 	{
 		fl[in_i][in_j] = 0;
 		fl[out_i][out_j] = 0;
@@ -34,20 +34,23 @@ void	fill_flow_node(int i, int j, char **ls, int **fl)
 	}
 	else
 	{
+		fl[in_i][in_j] = 0;
+		fl[out_i][out_j] = 0;
+		fl[in_i][out_j] = 0;
+		fl[out_i][in_j] = 0;
+	}
+}
+
+void	fill_flow_node(int i, int j, char **ls, int **fl)
+{
+	if (i == j)
+		fill_flow_sqr(i, j, fl, 1);
+	else
+	{
 		if (ls[i][j] == 0)
-		{
-			fl[in_i][in_j] = 0;
-			fl[out_i][out_j] = 0;
-			fl[in_i][out_j] = 0;
-			fl[out_i][in_j] = 0;
-		}
+			fill_flow_sqr(i, j, fl, 0);
 		else if (ls[i][j] == 1)
-		{
-			fl[in_i][in_j] = 0;
-			fl[out_i][out_j] = 0;
-			fl[in_i][out_j] = 1;
-			fl[out_i][in_j] = 1;
-		}
+			fill_flow_sqr(i, j, fl, 1);
 	}
 }
 
