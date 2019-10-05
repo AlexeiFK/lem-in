@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:03:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/05 20:02:38 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/05 21:34:48 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ void	fill_flow_sqr(int i, int j, int **fl, int is_linked)
 		fl[in_i][out_j] = 1;
 	else if (is_linked == 0)
 		fl[out_i][in_j] = 1;
-	else if (is_linked == 100) //TODO replace with INTMAX
-		fl[out_i][in_j] = 1;
+	else if (is_linked == 100)
+	{							//TODO replace with INTMAX
+		fl[in_i][out_j] = 100;
+		fl[out_i][in_j] = 100;
+	}
 }
 
 void	fill_flow_node(int i, int j, char **ls, int **fl)
