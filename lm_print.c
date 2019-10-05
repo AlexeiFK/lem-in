@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 13:15:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 17:44:18 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/05 23:16:25 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,48 @@ void	lm_print_flow(t_table *t)
 				ft_printf("%5d |", t->fls[i][j]);
 			else
 				ft_printf("%5d ", t->fls[i][j]);
+			++j;
+		}
+		ft_printf("\n");
+		++i;
+	}
+}
+
+void	lm_print_res(t_table *t)
+{
+	int		i;
+	int		j;
+	int		k;
+	int		size;
+
+	size = t->size;
+	i = 0;
+	ft_printf("Number of ants:%d\nSize:%d\n", t->n_ants, size);
+	ft_printf("%5s ", "");
+	ft_printf("\n");
+	i = 0;
+	size *= 2;
+	while (i < size)
+	{
+		j = 0;
+//		ft_printf("%5s%s\n", t->ns[i / 2]->name, "_in");
+//		ft_printf("%5s%s", t->ns[i / 2 + 1]->name, "_ot");
+		if ((i % 2) == 0)
+		{
+			k = 0;
+			while (k < size)
+			{
+				ft_printf("-------");
+				k++;
+			}
+			ft_printf("\n");
+		}
+		while (j < size)
+		{
+			if ((j % 2) == 1)
+				ft_printf("%5d |", t->r_fls[i][j]);
+			else
+				ft_printf("%5d ", t->r_fls[i][j]);
 			++j;
 		}
 		ft_printf("\n");
