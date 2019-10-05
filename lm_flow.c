@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:03:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 18:17:38 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/05 20:02:38 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,31 @@ void	fill_flow_sqr(int i, int j, int **fl, int is_linked)
 	out_i = in_i + 1;
 	in_j = j * 2;
 	out_j = in_j + 1;
-	if (is_linked)
+	if (is_linked == 2)
 	{
-		fl[in_i][in_j] = 0;
-		fl[out_i][out_j] = 0;
-		fl[in_i][out_j] = is_linked;
-		fl[out_i][in_j] = is_linked;
+		fl[in_i][out_j] = 1;
+		fl[out_i][in_j] = 1;
 	}
-	else
-	{
-		fl[in_i][in_j] = 0;
-		fl[out_i][out_j] = 0;
-		fl[in_i][out_j] = 0;
-		fl[out_i][in_j] = 0;
-	}
+	else if (is_linked == 1)
+		fl[in_i][out_j] = 1;
+	else if (is_linked == 0)
+		fl[out_i][in_j] = 1;
+	else if (is_linked == 100) //TODO replace with INTMAX
+		fl[out_i][in_j] = 1;
 }
 
 void	fill_flow_node(int i, int j, char **ls, int **fl)
 {
 	if (i == j)
-		fill_flow_sqr(i, j, fl, 1);
-	else
+		fill_flow_sqr(i, j, fl, 2);
+	else if (i < j)
 	{
-		if (ls[i][j] == 0)
+		if (ls[i][j] == 1)
 			fill_flow_sqr(i, j, fl, 0);
-		else if (ls[i][j] == 1)
+	}
+	else if (i > j)
+	{
+		if (ls[i][j] == 1)
 			fill_flow_sqr(i, j, fl, 1);
 	}
 }

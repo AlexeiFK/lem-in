@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 21:19:23 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 18:22:53 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/05 17:35:55 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		lm_read(t_table *t)
 
 	comm_tmp = 0;
 	flag = 0;
+	str = NULL;
 	while (ft_gnl(0, &str, 0) > 0)
 	{
 		ft_printf("%s\n", str);

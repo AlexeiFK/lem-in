@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 21:23:50 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/05 20:43:05 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ typedef struct	s_table
 	int			id_end;
 }				t_table;
 
+typedef struct	s_cord
+{
+	int			s;
+	int			e;
+}				t_cord;
+
 void	lm_print_flow(t_table *t);
 int		lm_init_flow(t_table *t);
 void	split_free(char **split);
@@ -70,7 +76,11 @@ int		ft_is_empty_q(t_list *q);
 int		ft_dequeue_int(t_list **q);
 void	ft_enqueue_int(t_list **q, int id);
 
-int		*ft_bfs(int **fls, int size, int s, int e);
+int		*ft_newarr(int size, int set);
+
+int		ft_bfs(int **fls, int size, t_cord c, int *res);
+
+int		lm_edm_karp(t_table *t);
 
 int		lm_find_res(t_table *t);
 

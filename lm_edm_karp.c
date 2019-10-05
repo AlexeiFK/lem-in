@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_lem_in.c                                      :+:      :+:    :+:   */
+/*   lm_edm_karp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 22:16:24 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/05 17:41:32 by rjeor-mo         ###   ########.fr       */
+/*   Created: 2019/10/05 20:28:20 by rjeor-mo          #+#    #+#             */
+/*   Updated: 2019/10/05 20:52:57 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include <stdlib.h>
+#include "libft.h"
 
-int		main(void)
+void			print_ints(int *res, int size)
 {
-	t_table	t;
+	int		k;
 
-	t.n_ants = -1;
-	t.ls = NULL;
-	t.fls = NULL;
-	t.nl = NULL;
-	t.ns = NULL;
-	t.size = -1;
-	t.id_start = -1;
-	t.id_end = -1;
-	lm_read(&t);
-	lm_init_flow(&t);
-	t.id_start *= 2;
-	t.id_end *= 2;
-	t.id_end++;
-	lm_find_res(&t);
-	return (0);
+	k = 0;
+	while (k < size)
+	{
+		ft_printf("res[%d]=%d\n", k, res[k]);
+		++k;
+	}
+}
+
+int			lm_edm_karp(t_table *t)
+{
+	int		*res;
+	int		size;
+	t_cord	d;
+
+	size = t->size * 2;
+	d.s = t->id_start;
+	d.e = t->id_end;
+	res = ft_newarr(size, -1);
+	ft_bfs(t->fls, size, d, res);
+	print_ints(res, size);
+	return (1);
 }
