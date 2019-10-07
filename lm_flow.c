@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:03:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/05 21:34:48 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/07 22:23:31 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	fill_flow_node(int i, int j, char **ls, int **fl)
 	else if (i > j)
 	{
 		if (ls[i][j] == 1)
-			fill_flow_sqr(i, j, fl, 1);
+			fill_flow_sqr(i, j, fl, 0);
 	}
 }
 
@@ -109,6 +109,6 @@ int		lm_init_flow(t_table *t)
 	ft_printf("flow created\n");
 	if (!(t->fls))
 		return (-1);
-	lm_print_flow(t);
+//	lm_print_flow(t);
 	return (1);
 }

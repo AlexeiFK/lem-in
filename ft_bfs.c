@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 19:22:04 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/05 21:11:28 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/07 22:34:41 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_bfs(int **fls, int size, t_cord d, int *res)
 	int		id;
 	int		i;
 
-	ft_printf("bfs open, size:%d\n", size);
+//	ft_printf("bfs open, size:%d\n", size);
 	resik = 0;
 	q = NULL;
 	i = 0;
@@ -65,28 +65,28 @@ int		ft_bfs(int **fls, int size, t_cord d, int *res)
 		return (-1);
 	q = ft_lstnew(&(d.s), sizeof(int));
 	id = -1;
-	ft_printf("res and vis malloced\n");
-	ft_enqueue_int(&q, d.s);
-	ft_printf("\nst_q:");
-	ft_lstiter(q, print_q);
+//	ft_printf("res and vis malloced\n");
+//	ft_enqueue_int(&q, d.s);
+//	ft_printf("\nst_q:");
+//	ft_lstiter(q, print_q);
 	visited[d.s] = 1;
 	while (!ft_is_empty_q(q))
 	{
 		id = ft_dequeue_int(&q);
-		ft_printf("\nid=%d", id);
-		ft_printf("\n1)q:");
-		ft_lstiter(q, print_q);
+//		ft_printf("\nid=%d", id);
+//		ft_printf("\n1)q:");
+//		ft_lstiter(q, print_q);
 		if (id == d.e)
 			return (free_ret(visited, &q, 1));
 		i = 0;
-		ft_printf("\n");
+//		ft_printf("\n");
 		while (i < size)
 		{
 			if (fls[id][i] >= 1 && visited[i] == 0)	//posible optimization
 			{
 				ft_enqueue_int(&q, i);
-				ft_printf("\n2)q:");
-				ft_lstiter(q, print_q);
+//				ft_printf("\n2)q:");
+//				ft_lstiter(q, print_q);
 				visited[i] = 1;
 				res[i] = id;
 			}			

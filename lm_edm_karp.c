@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 20:28:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/05 23:20:43 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/07 22:44:57 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		change_flow(int **fls, int *path, int s, int e)
 	i = e;
 	while (i != s)
 	{
-		ft_printf("(e:%ds:%d)%d->%d\n", e, s, i, path[i]);
+//		ft_printf("(e:%ds:%d)%d->%d\n", e, s, i, path[i]);
 		if (!is_es(s, e, i, path[i]))
 		{
 			fls[i][path[i]] += 1;
@@ -100,8 +100,10 @@ int			lm_edm_karp(t_table *t)
 	int		**tmpfls;
 	int		*res;
 	int		size;
+	int		count; //
 	t_cord	d;
 
+	count = 0;
 	n_ants = t->n_ants;
 	size = t->size * 2;
 	d.s = t->id_start;
@@ -110,16 +112,17 @@ int			lm_edm_karp(t_table *t)
 	tmpfls = fls_copy(t->fls, size);
 	while (ft_bfs(t->fls, size, d, res) && n_ants > 0)
 	{
-		ft_printf("founded path:\n");
-		print_ints(res, size);
+		++count;
+		ft_printf("founded path:%d\n", count);
+//		print_ints(res, size);
 		change_flow(t->fls, res, d.s, d.e);
 		--n_ants;
-		lm_print_flow(t);
+//		lm_print_flow(t);
 		ft_memset(res, -1, size * sizeof(int));
 	}
 	ft_printf("alg is over\n");
 	lm_get_result_table(t->fls, tmpfls, size);
 	t->r_fls = tmpfls;
-	lm_print_flow(t);
+//	lm_print_flow(t);
 	return (1);
 }

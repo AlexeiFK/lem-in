@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/05 23:17:07 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/07 22:03:07 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct	s_cord
 	int			e;
 }				t_cord;
 
+int		is_es(int s, int e, int i, int j);
+void	print_ints(int *i, int size);
 void	lm_print_flow(t_table *t);
 void	lm_print_res(t_table *t);
 int		lm_init_flow(t_table *t);
@@ -86,4 +88,5 @@ int		lm_edm_karp(t_table *t);
 
 int		lm_find_res(t_table *t);
 
+int		lm_r_flow_to_res(t_table *t);
 #endif

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 13:14:35 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 18:24:01 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/07 22:26:01 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int		lm_init_table(t_table *t)
 	i = 0;
 	size = ft_lstsize(t->nl);
 	t->size = size;
-	ft_lstiter(t->nl, print_node);
+//	ft_lstiter(t->nl, print_node);
 	lm_list_to_array(t);
-	print_node_arr(t);
+//	print_node_arr(t);
 	if ((new = (char**)malloc(sizeof(char*) * size)) == NULL)
 		return (-1);
 	while (i < size)
@@ -58,6 +58,6 @@ int		lm_init_table(t_table *t)
 		++i;
 	}
 	t->ls = new;
-	lm_print_table(t);
+//	lm_print_table(t);
 	return (1);
 }
