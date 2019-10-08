@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/07 22:03:07 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:27:34 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_table
 	char		**ls;
 	int			**fls;
 	int			**r_fls;
+	int			**t_fls;
 	t_list		*nl;
 	t_node		**ns;
 	int			size;
@@ -45,6 +46,8 @@ typedef struct	s_cord
 	int			s;
 	int			e;
 }				t_cord;
+
+int		**fls_copy(int **src, int size);
 
 int		is_es(int s, int e, int i, int j);
 void	print_ints(int *i, int size);
@@ -86,7 +89,10 @@ int		ft_bfs(int **fls, int size, t_cord c, int *res);
 
 int		lm_edm_karp(t_table *t);
 
+int		lm_count_ants_by_path(int as, int ps, int *rs, int *sps);
+
 int		lm_find_res(t_table *t);
+int		lm_find_best_flow(t_table *t);
 
 int		lm_r_flow_to_res(t_table *t);
 #endif

@@ -6,7 +6,7 @@
 #    By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/24 22:08:26 by rjeor-mo          #+#    #+#              #
-#    Updated: 2019/10/07 22:35:39 by rjeor-mo         ###   ########.fr        #
+#    Updated: 2019/10/08 19:56:03 by rjeor-mo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,9 @@ INCLUDES= -I$(IDIR)
 HEADERS= lem_in.h
 SRC= main_lem_in.c lm_reader.c lm_reader_fill.c lm_valid.c lm_valid_comm.c lm_errors.c lm_init.c \
 	lm_print.c lm_free.c lm_reader2.c lm_flow.c ft_queue.c ft_lstadd_l.c ft_bfs.c lm_result.c \
-	lm_edm_karp.c lm_unflow.c
+	lm_edm_karp.c lm_unflow.c lm_split_ants.c
 
-CFLAGS=-Wall -Wextra -Werror $(INCLUDES) -O2
+CFLAGS=-Wall -Wextra -Werror $(INCLUDES) #-O2 -march=native
 
 RM= rm -f
 

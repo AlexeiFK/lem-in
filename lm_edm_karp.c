@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 20:28:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/07 22:44:57 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:39:04 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void		lm_get_result_table(int **fls, int **res, int size)
 
 int			lm_edm_karp(t_table *t)
 {
-	int		n_ants;
 	int		**tmpfls;
 	int		*res;
 	int		size;
@@ -104,19 +103,17 @@ int			lm_edm_karp(t_table *t)
 	t_cord	d;
 
 	count = 0;
-	n_ants = t->n_ants;
 	size = t->size * 2;
 	d.s = t->id_start;
 	d.e = t->id_end;
 	res = ft_newarr(size, -1);
-	tmpfls = fls_copy(t->fls, size);
-	while (ft_bfs(t->fls, size, d, res) && n_ants > 0)
+	tmpfls = fls_copy(t->t_fls, size);
+	if (ft_bfs(t->fls, size, d, res))
 	{
 		++count;
 		ft_printf("founded path:%d\n", count);
 //		print_ints(res, size);
 		change_flow(t->fls, res, d.s, d.e);
-		--n_ants;
 //		lm_print_flow(t);
 		ft_memset(res, -1, size * sizeof(int));
 	}
@@ -124,5 +121,5 @@ int			lm_edm_karp(t_table *t)
 	lm_get_result_table(t->fls, tmpfls, size);
 	t->r_fls = tmpfls;
 //	lm_print_flow(t);
-	return (1);
+	return (count);
 }

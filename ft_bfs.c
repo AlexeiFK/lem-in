@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 19:22:04 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/07 23:20:33 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/08 18:39:41 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		ft_bfs(int **fls, int size, t_cord d, int *res)
 //	ft_printf("\nst_q:");
 //	ft_lstiter(q, print_q);
 	visited[d.s] = 1;
+//	ft_printf("Map_size:%dStart:\n", size);
 	while (!ft_is_empty_q(q))
 	{
 		id = ft_dequeue_int(&q);
@@ -77,7 +78,10 @@ int		ft_bfs(int **fls, int size, t_cord d, int *res)
 //		ft_printf("\n1)q:");
 //		ft_lstiter(q, print_q);
 		if (id == d.e)
+		{
+//			ft_printf("End\n");
 			return (free_ret(visited, &q, 1));
+		}
 		i = 0;
 //		ft_printf("\n");
 		while (i < size)
@@ -89,7 +93,7 @@ int		ft_bfs(int **fls, int size, t_cord d, int *res)
 //				ft_lstiter(q, print_q);
 				visited[i] = 1;
 				res[i] = id;
-			}			
+			}	
 			++i;
 		}
 	}
