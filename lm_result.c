@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/08 20:58:38 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/09 22:38:48 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ int		lm_path_size(int *path, int s, int e)
 		i = path[i];
 		++c;
 	}
-//	c--;
-	return (c);
+	return ((c - 1) / 2);
 }
 
 int		lm_find_res(t_table *t)
 {
-	t_cord	d;
-	int		*res;
-	int		num;
+//	t_cord	d;
+//	int		*res;
+//	int		num;
 
-//	lm_find_best_flow(t);
-//	return (1);
+	lm_find_best_flow(t);
+	return (1);
+	/*
 	num = 0;
 	d.e = t->id_end;
 	d.s = t->id_start;
@@ -90,12 +90,13 @@ int		lm_find_res(t_table *t)
 		ft_memset(res, -1, t->size * sizeof(int));
 	}
 	return (1);
+	*/
 }
 
 void	lm_fill_lens()
 {
 }
-/*
+
 int		lm_find_best_flow(t_table *t)
 {
 	t_cord	d;
@@ -129,12 +130,14 @@ int		lm_find_best_flow(t_table *t)
 			lm_close_nodes(t->r_fls, res, d);
 			ft_memset(res, -1, t->size * 2 * sizeof(int));
 		}
-//		if (lm_count_ants_by_path(t->n_ants, num, lens, splits) == 0)
-//		{
-//			free(lens);
-//			free(splits);
-//			break ;
-//		}
+		if (lm_count_ants_by_path(t->n_ants, num, lens, splits) == 0)
+		{
+			print_ints(splits, num);
+			free(lens);
+			free(splits);
+			break ;
+		}
+		print_ints(splits, num);
 		t->r_fls = tmp;
 	//	t->fls = tmp;
 		free(lens);
@@ -142,4 +145,4 @@ int		lm_find_best_flow(t_table *t)
 	}
 	return (1);
 }
-*/
+

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:03:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/07 22:23:31 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/09 21:57:33 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int		**init_flow(int size)
 {
 	int		**new;
 	int		i;
+	int		j;
 
 	i = 0;
 	size *= 2;
@@ -70,7 +71,12 @@ int		**init_flow(int size)
 	{
 		if (!(new[i] = (int*)malloc(sizeof(int) * size)))
 			return (NULL);
-		ft_bzero(new[i], sizeof(int) * size);
+		j = 0;
+		while (j < size)
+		{
+			new[i][j] = 0;
+			++j;
+		}
 		++i;
 	}
 	return (new);

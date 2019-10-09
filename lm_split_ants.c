@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:07:34 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/08 19:56:22 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/09 21:45:09 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static int		find_min_id(int *res, int size)
 int				lm_count_ants_by_path(int n_ants,
 		int n_paths, int *lens, int *split)
 {
-//	int		i;
-//	int		j;
 	int		min;
 
 	if (n_paths == 1)
@@ -38,8 +36,6 @@ int				lm_count_ants_by_path(int n_ants,
 		split[0] = n_ants;
 		return (1);
 	}
-//	i = 0;
-//	j = 0;
 	while (n_ants)
 	{
 		min = find_min_id(lens, n_paths);

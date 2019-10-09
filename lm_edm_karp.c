@@ -6,10 +6,11 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 20:28:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/08 20:39:04 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/09 22:36:44 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "lem_in.h"
 #include "libft.h"
 
@@ -42,11 +43,9 @@ void		change_flow(int **fls, int *path, int s, int e)
 {
 	int		i;
 
-//	fls = NULL;	//
 	i = e;
 	while (i != s)
 	{
-//		ft_printf("(e:%ds:%d)%d->%d\n", e, s, i, path[i]);
 		if (!is_es(s, e, i, path[i]))
 		{
 			fls[i][path[i]] += 1;
@@ -62,12 +61,12 @@ int			**fls_copy(int **src, int size)
 	int		i;
 
 	i = 0;
-	tmpfls = ft_memalloc(sizeof(int*) * size);
+	tmpfls = (int**)malloc(sizeof(int*) * size);
 	if (!tmpfls)
 		return (NULL);
 	while (i < size)
 	{
-		tmpfls[i] = ft_memalloc(sizeof(int) * size);
+		tmpfls[i] = (int*)malloc(sizeof(int) * size);
 		ft_memcpy(tmpfls[i], src[i], sizeof(int) * size);
 		++i;
 	}
@@ -94,15 +93,27 @@ void		lm_get_result_table(int **fls, int **res, int size)
 	}
 }
 
+void		arrintset(int *res, int size, int set)
+{
+	int 	i;
+
+	i = 0;
+	while (i < size)
+	{
+		res[i] = set;
+		++i;
+	}
+}
+
 int			lm_edm_karp(t_table *t)
 {
 	int		**tmpfls;
 	int		*res;
 	int		size;
-	int		count; //
 	t_cord	d;
+	int		ret;
 
-	count = 0;
+	ret = 0;
 	size = t->size * 2;
 	d.s = t->id_start;
 	d.e = t->id_end;
@@ -110,16 +121,13 @@ int			lm_edm_karp(t_table *t)
 	tmpfls = fls_copy(t->t_fls, size);
 	if (ft_bfs(t->fls, size, d, res))
 	{
-		++count;
-		ft_printf("founded path:%d\n", count);
-//		print_ints(res, size);
-		change_flow(t->fls, res, d.s, d.e);
-//		lm_print_flow(t);
-		ft_memset(res, -1, size * sizeof(int));
+		change_flow(t->fls, res, d.s, d.e); //		lm_print_flow(t);
+		arrintset(res, size, -1);
+		ret = 1;
 	}
-	ft_printf("alg is over\n");
+//	ft_printf("alg is over\n");
 	lm_get_result_table(t->fls, tmpfls, size);
 	t->r_fls = tmpfls;
 //	lm_print_flow(t);
-	return (count);
+	return (ret);
 }

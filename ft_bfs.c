@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 19:22:04 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/08 18:39:41 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/09 22:39:26 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,18 @@ static int	free_ret(int *to_free, t_list **q, int ret)
 int		*ft_newarr(int size, int set)
 {
 	int		*new;
+	int		i;
 
+	i = 0;
 	new = NULL;
 	if (!(new = (int*)malloc(sizeof(int) * size)))
 		return (NULL);
-	ft_memset(new, set, size * sizeof(int));
+	while (i < size)
+	{
+		new[i] = set;
+		++i;
+	}
+//	ft_memset(new, set, size * sizeof(int));
 	return (new);
 }
 
