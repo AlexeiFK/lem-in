@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 20:28:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/09 22:36:44 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/11 22:00:17 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,24 @@ void		arrintset(int *res, int size, int set)
 	}
 }
 
+int			*arrintcpy(int *arr, int size)
+{
+	int		*new;
+	int		i;
+
+	if (!(new = (int*)malloc(sizeof(int) * size)))
+		return (NULL);
+	i = 0;
+//	ft_printf("size = %d\n", size);
+	while (i < size)
+	{
+//		ft_printf("new = %d, arr = %d, i = %d\n", new[i], arr[i], i);
+		new[i] = arr[i];
+		++i;
+	}
+	return (new);
+}
+
 int			lm_edm_karp(t_table *t)
 {
 	int		**tmpfls;
@@ -125,6 +143,7 @@ int			lm_edm_karp(t_table *t)
 		arrintset(res, size, -1);
 		ret = 1;
 	}
+	free(res);
 //	ft_printf("alg is over\n");
 	lm_get_result_table(t->fls, tmpfls, size);
 	t->r_fls = tmpfls;

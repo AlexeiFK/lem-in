@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/08 20:27:34 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/11 16:25:23 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct	s_table
 	int			id_end;
 }				t_table;
 
+
+
 typedef struct	s_cord
 {
 	int			s;
@@ -54,8 +56,14 @@ void	print_ints(int *i, int size);
 void	lm_print_flow(t_table *t);
 void	lm_print_res(t_table *t);
 int		lm_init_flow(t_table *t);
+
 void	split_free(char **split);
+void	lm_free(t_table *t);
+void	lm_free_nodes_arr(t_node **n, int size);
+void	lm_free_matrix(int **m, int size);
+void	lm_free_ls(char **m, int size);
 void	split_str_free(char **split, char *str);
+
 int		lm_read(t_table *t);
 int		lm_read_n_ants(t_table *t, char **split);
 int		lm_read_node(t_table *t, char **split, int end_start);
@@ -84,6 +92,7 @@ int		ft_dequeue_int(t_list **q);
 void	ft_enqueue_int(t_list **q, int id);
 
 int		*ft_newarr(int size, int set);
+int		*arrintcpy(int *src, int size);
 
 int		ft_bfs(int **fls, int size, t_cord c, int *res);
 
@@ -95,4 +104,8 @@ int		lm_find_res(t_table *t);
 int		lm_find_best_flow(t_table *t);
 
 int		lm_r_flow_to_res(t_table *t);
+
+int		lm_path_size(int *res, int s, int e);
+
+int		lm_print_final(t_table *t, int *split, int **path, int lens);
 #endif

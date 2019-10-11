@@ -6,11 +6,23 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:07:34 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/09 21:45:09 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/11 14:10:45 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+static void		normalize_lens(int *lens, int size)
+{
+	int		i;
+	
+	i = 0;
+	while (i < size)
+	{
+		lens[i] = (lens[i] - 1) / 2;
+		++i;
+	}
+}
 
 static int		find_min_id(int *res, int size)
 {
@@ -36,6 +48,7 @@ int				lm_count_ants_by_path(int n_ants,
 		split[0] = n_ants;
 		return (1);
 	}
+	normalize_lens(lens, n_paths);
 	while (n_ants)
 	{
 		min = find_min_id(lens, n_paths);

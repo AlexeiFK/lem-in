@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 13:14:35 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/07 22:26:01 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/11 21:54:07 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		lm_list_to_array(t_table *t)
 		if (!(new[n->id] = malloc(tmp->content_size)))
 			return (-1);
 		ft_memcpy(new[n->id], tmp->content, tmp->content_size);
+		new[n->id]->name = ft_strdup(n->name);
+		free(n->name);
 		tmp = tmp->next;
 	}
 	ft_lstdel(&t->nl, lm_delete_node);
