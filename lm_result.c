@@ -107,16 +107,13 @@ int		lm_find_best_flow(t_table *t)
 	int		num;
 	int		i;
 
-	num = 0;
+	num = 1;
 	d.e = t->id_end;
 	d.s = t->id_start;
 	tmp = fls_copy(t->fls, t->size * 2);
 	t->t_fls = tmp;
-	while (1)
+	while (lm_edm_karp(t))
 	{
-		++num;
-		if (lm_edm_karp(t) == 0)
-			break ;
 		i = 0;
 		lens = ft_newarr(num, -1);
 		splits = ft_newarr(num, 0);
@@ -128,10 +125,11 @@ int		lm_find_best_flow(t_table *t)
 			lens[i] = lm_path_size(res, d.s, d.e);
 			++i;
 			lm_close_nodes(t->r_fls, res, d);
-			ft_memset(res, -1, t->size * 2 * sizeof(int));
+			ft_memset(res, -1, t->size * 2 * sizeof(int)); // arrayinit add TODO
 		}
 		if (lm_count_ants_by_path(t->n_ants, num, lens, splits) == 0)
 		{
+			ft_putstr("FINAL_RES:\n");
 			print_ints(splits, num);
 			free(lens);
 			free(splits);
@@ -142,6 +140,7 @@ int		lm_find_best_flow(t_table *t)
 	//	t->fls = tmp;
 		free(lens);
 		free(splits);
+		++num;
 	}
 	return (1);
 }
