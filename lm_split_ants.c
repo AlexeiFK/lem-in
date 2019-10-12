@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:07:34 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/11 14:10:45 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/12 20:37:36 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,17 @@ static void		normalize_lens(int *lens, int size)
 static int		find_min_id(int *res, int size)
 {
 	int		i;
+	int		id;
 
+	id = 0;
 	i = 0;
-	while ((i + 1) < size)
+	while (i < size)
 	{
-		if (res[i] < res[i + 1])
-			return (i);
+		if (res[id] > res[i])
+			id = i;
 		++i;
 	}
-	return (i);
+	return (id);
 }
 
 int				lm_count_ants_by_path(int n_ants,

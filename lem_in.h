@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/11 16:25:23 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/12 21:15:19 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define C_END 2
 # define C_COMMENT 3
 # define C_EOFF 4
+# define NO_PATH 104
 
 typedef struct	s_node
 {
@@ -39,6 +40,7 @@ typedef struct	s_table
 	int			size;
 	int			id_start;
 	int			id_end;
+	char		**result;
 }				t_table;
 
 
@@ -75,8 +77,11 @@ void	lm_delete_node(void *mem, size_t size);
 int		ft_lstsize(t_list *lst);
 void	print_node_arr(t_table *t);
 void	print_node(t_list *lst);
+
 void	ft_error_msg(void);
+void	ft_error_nmsg(int num);
 void	ft_error_free(char **split, char *str);
+
 int		ft_strisdig(char *str);
 int		split_size(char **split);
 char	**is_valid_link(char **split);

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/11 22:33:26 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/12 23:43:18 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int		lm_find_best_flow(t_table *t)
 		final_paths = d_arr_init(flow);
 		while (ft_bfs(t->r_fls, t->size * 2, d, res) && (i <= flow))
 		{
-			ft_printf("founded path:%d(len:%d)\n", flow, lm_path_size(res, d.s, d.e));
+		//	ft_printf("founded path:%d(len:%d)\n", flow, lm_path_size(res, d.s, d.e));
 			lens[i] = lm_path_size(res, d.s, d.e);
 			final_paths[i] = arrintcpy(res, t->size * 2);
 			++i;
@@ -180,7 +180,7 @@ int		lm_find_best_flow(t_table *t)
 		}
 		else
 		{
-			print_ints(splits, flow);
+			//print_ints(splits, flow);
 			if (final_split)
 			{
 				free(final_split);
@@ -199,13 +199,18 @@ int		lm_find_best_flow(t_table *t)
 		}
 		lm_free_matrix(t->r_fls, t->size * 2);
 		free_paths(final_paths, flow);
-//		t->r_fls = tmp;
-	//	t->fls = tmp;
-///		free_paths(final_paths, flow);
-//		free(final_split);
 		free(lens);
 		free(splits);
 		++flow;
+	}
+	if (ret == -1)
+		ft_error_nmsg(NO_PATH);
+	if (ret == 1)
+	{
+		if (final_split)
+			lm_print_final(t, final_split, tmp_paths, flow - 1);
+		else
+			lm_print_final(t, splits, tmp_paths, flow - 1);
 	}
 	if (final_split)
 		free(final_split);
