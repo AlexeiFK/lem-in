@@ -6,9 +6,12 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/12 23:43:18 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/13 23:14:18 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+#include <limits.h>
 
 #include <stdlib.h>
 #include "libft.h"
@@ -26,13 +29,8 @@ void	lm_close_nodes(int **ls, int *path, t_cord d)
 	i = path[i];
 	if (i != s)
 	{
-//		ft_printf("(e:%ds:%d)%d->%d\n", e, s, i, path[i]);
-//		if (!is_es(s, e, i, path[i]))
-//		{
-			ls[i][path[i]] = 0;
-			ls[path[i]][i] = 0;
-//		}
-		i = path[i];
+		ls[i][path[i]] = 0;
+		ls[path[i]][i] = 0;
 	}
 }
 
@@ -45,7 +43,6 @@ int		lm_path_size(int *path, int s, int e)
 	i = e;
 	while (i != s)
 	{
-//		ft_printf("(e:%ds:%d)%d->%d\n", e, s, i, path[i]);
 		i = path[i];
 		++c;
 	}
@@ -94,10 +91,6 @@ int		lm_find_res(t_table *t)
 	*/
 }
 
-void	lm_fill_lens()
-{
-}
-
 int		**d_arr_init(int size)
 {
 	int		**new;
@@ -135,7 +128,10 @@ int		lm_find_best_flow(t_table *t)
 	int		i;
 	int		j;
 	int		ret;
+	int		size;
+	int		tmp_size;
 
+	tmp_size = INT_MAX;
 	tmp_paths = NULL;
 	final_split = NULL;
 	flow = 1;
@@ -145,23 +141,24 @@ int		lm_find_best_flow(t_table *t)
 	t->t_fls = tmp;
 	res = ft_newarr(t->size * 2, -1);
 	ret = -1;
-	while (lm_edm_karp(t) && ret != 0)
+	size = INT_MAX - 1;
+	while (lm_edm_karp(t) && ret != 0 && tmp_size >= size)
 	{
 		i = 0;
+		tmp_size = size;
 		lens = ft_newarr(flow, -1);
 		splits = ft_newarr(flow, 0);
 		final_paths = d_arr_init(flow);
 		while (ft_bfs(t->r_fls, t->size * 2, d, res) && (i <= flow))
 		{
-		//	ft_printf("founded path:%d(len:%d)\n", flow, lm_path_size(res, d.s, d.e));
 			lens[i] = lm_path_size(res, d.s, d.e);
 			final_paths[i] = arrintcpy(res, t->size * 2);
 			++i;
 			lm_close_nodes(t->r_fls, res, d);
-		//	ft_memset(res, -1, t->size * 2 * sizeof(int)); // arrayinit add TODO
 		}
 		ret = lm_count_ants_by_path(t->n_ants, flow, lens, splits);
-		if (ret == 0)
+		size = (lm_path_size(final_paths[0], t->id_start, t->id_end) - 1) / 2 + splits[0];
+		if ((ret == 0 && tmp_size == size) || (tmp_size < size))
 		{
 			if (tmp_paths)
 			{
@@ -177,8 +174,9 @@ int		lm_find_best_flow(t_table *t)
 				else
 					lm_print_final(t, splits, final_paths, flow - 1);
 			}
+			ret = 0;
 		}
-		else
+		else 
 		{
 			//print_ints(splits, flow);
 			if (final_split)

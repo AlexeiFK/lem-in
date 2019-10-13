@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 14:21:03 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/12 23:53:43 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/13 18:43:48 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,12 @@ int		one_path_one_ant(t_table *t, int *path, int ant, int n)
 	s = t->id_start;
 	e = t->id_end;
 	i = e;
-//	t->result[n] = ft_free_strjoin(t->result[n], new_ant_path(ant, t->ns[i / 2]->name)); //malloc prot
-//	ft_printf("L%d-%s n = %d", ant, t->ns[i / 2]->name, n);
-//	i = path[i];
-//	i = path[i];
 	while (i != s)
 	{
-	//	t->result[n]
 		if (i % 2 == 0)
 		{
 			t->result[n] = ft_free_strjoin(t->result[n], new_ant_path(ant, t->ns[i / 2]->name)); //malloc prot
-//			else
-//			{
-//				t->result[n] = ft_free_strjoin();
-//			}
 			--n;
-		//	ft_printf("%s", new_ant_path(ant, t->ns[i / 2]->name));
 		}
 		i = path[i];
 	}
@@ -111,7 +101,6 @@ char	**lm_create_res(t_table *t, int *split, int **paths, int flow)
 		j = 0;
 		while (j < split[i])
 		{
-	//		ft_printf("\n", ant);
 			one_path_one_ant(t, paths[i], ant, (lm_path_size(paths[i], t->id_start, t->id_end) - 1) / 2  + j);
 			++j;
 			++ant;
@@ -128,6 +117,12 @@ int		lm_print_final(t_table *t, int *split, int **paths, int flow)
 	int		size;
 
 	result = lm_create_res(t, split, paths, flow); //malloc 
+	i = 0;
+	while (i < flow)
+	{
+		ft_printf("[%d]=%d\n", i, split[i]);
+		++i;
+	}
 	i = 0;
 	size = (lm_path_size(paths[0], t->id_start, t->id_end) - 1) / 2 + split[0];
 	while (i < size)
