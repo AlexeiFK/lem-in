@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/13 23:14:18 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/13 23:42:03 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,44 +51,8 @@ int		lm_path_size(int *path, int s, int e)
 
 int		lm_find_res(t_table *t)
 {
-//	t_cord	d;
-//	int		*res;
-//	int		num;
-
 	lm_find_best_flow(t);
 	return (1);
-	/*
-	num = 0;
-	d.e = t->id_end;
-	d.s = t->id_start;
-//	return ((int)t);
-//	ft_bfs(t->fls, t->size * 2, t->id_start, t->id_end);
-	t->t_fls = fls_copy(t->fls, t->size * 2);
-	lm_edm_karp(t);
-	lm_edm_karp(t);
-	lm_edm_karp(t);
-	lm_edm_karp(t);
-//	lm_edm_karp(t);
-//	lm_print_res(t);
-	lm_r_flow_to_res(t);
-//	lm_print_table(t);
-	t->size *= 2;//
-	res = ft_newarr(t->size, -1);
-	ft_printf("From: %d to %d\n", d.s, d.e);
-	while (ft_bfs(t->r_fls, t->size, d, res))
-	{
-		num++;
-		ft_printf("founded path:%d(len:%d)\n", num, lm_path_size(res, d.s, d.e));
-//		print_ints(res, t->size);
-		lm_close_nodes(t->r_fls, res, d);
-	//	lm_count_ants_by_path(t->n_ants, );
-		//change_flow(t->fls, res, d.s, d.e);
-		//--n_ants;
-		//lm_print_flow(t);
-		ft_memset(res, -1, t->size * sizeof(int));
-	}
-	return (1);
-	*/
 }
 
 int		**d_arr_init(int size)
@@ -114,11 +78,52 @@ void	free_paths(int **paths, int size)
 	free(paths);
 }
 
+
+void	lm_rewrite_split(int **final_split, int flow, int *splits)
+{
+	if (final_split)
+		free(final_split);
+	*final_split = arrintcpy(splits, flow);
+}
+
+void	lm_rewrite_paths(int i, int size,
+		int **tmp_paths, int **final_paths)
+{
+	int		j;
+
+	j = i;
+	i = 0;
+	while (i < j)
+	{
+		tmp_paths[i] = arrintcpy(final_paths[i], size);
+		++i;
+	}
+}
+
+int		lm_do_bfs(t_table *t, int flow, int *lens, int **final_paths)
+{
+	int		i;
+	t_cord	d;
+	int		*res;
+
+	i = 0;
+	d.e = t->id_end;
+	d.s = t->id_start;
+	res = ft_newarr(t->size * 2, -1);
+	while (ft_bfs(t->r_fls, t->size * 2, d, res) && (i <= flow))
+	{
+		lens[i] = lm_path_size(res, d.s, d.e);
+		final_paths[i] = arrintcpy(res, t->size * 2);
+		++i;
+		lm_close_nodes(t->r_fls, res, d);
+	}
+	free(res);
+	return (i);
+}
+
 int		lm_find_best_flow(t_table *t)
 {
 	t_cord	d;
-	int		**tmp;
-	int		*res;
 	int		*lens;
 	int		*final_split;
 	int		**tmp_paths;
@@ -126,7 +131,7 @@ int		lm_find_best_flow(t_table *t)
 	int		*splits;
 	int		flow;
 	int		i;
-	int		j;
+//	int		j;
 	int		ret;
 	int		size;
 	int		tmp_size;
@@ -137,9 +142,7 @@ int		lm_find_best_flow(t_table *t)
 	flow = 1;
 	d.e = t->id_end;
 	d.s = t->id_start;
-	tmp = fls_copy(t->fls, t->size * 2);
-	t->t_fls = tmp;
-	res = ft_newarr(t->size * 2, -1);
+	t->t_fls = fls_copy(t->fls, t->size * 2);
 	ret = -1;
 	size = INT_MAX - 1;
 	while (lm_edm_karp(t) && ret != 0 && tmp_size >= size)
@@ -149,13 +152,7 @@ int		lm_find_best_flow(t_table *t)
 		lens = ft_newarr(flow, -1);
 		splits = ft_newarr(flow, 0);
 		final_paths = d_arr_init(flow);
-		while (ft_bfs(t->r_fls, t->size * 2, d, res) && (i <= flow))
-		{
-			lens[i] = lm_path_size(res, d.s, d.e);
-			final_paths[i] = arrintcpy(res, t->size * 2);
-			++i;
-			lm_close_nodes(t->r_fls, res, d);
-		}
+		i = lm_do_bfs(t, flow, lens, final_paths);
 		ret = lm_count_ants_by_path(t->n_ants, flow, lens, splits);
 		size = (lm_path_size(final_paths[0], t->id_start, t->id_end) - 1) / 2 + splits[0];
 		if ((ret == 0 && tmp_size == size) || (tmp_size < size))
@@ -178,23 +175,17 @@ int		lm_find_best_flow(t_table *t)
 		}
 		else 
 		{
-			//print_ints(splits, flow);
+			lm_rewrite_split(&final_split, flow, splits);
+			/*
 			if (final_split)
-			{
 				free(final_split);
-			}
 			final_split = arrintcpy(splits, flow);
+			*/
 		}
 		if (tmp_paths)
 			free_paths(tmp_paths, flow - 1);
 		tmp_paths = d_arr_init(flow);
-		j = i;
-		i = 0;
-		while (i < j)
-		{
-			tmp_paths[i] = arrintcpy(final_paths[i], t->size * 2);
-			++i;
-		}
+		lm_rewrite_paths(i, t->size * 2, tmp_paths, final_paths);
 		lm_free_matrix(t->r_fls, t->size * 2);
 		free_paths(final_paths, flow);
 		free(lens);
@@ -214,6 +205,5 @@ int		lm_find_best_flow(t_table *t)
 		free(final_split);
 	if (tmp_paths)
 		free_paths(tmp_paths, flow - 1);
-	free(res);
 	return (1);
 }
