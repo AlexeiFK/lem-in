@@ -6,99 +6,15 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/13 23:42:03 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/14 22:52:05 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <limits.h>
 
 #include <stdlib.h>
 #include "libft.h"
 #include "lem_in.h"
-
-void	lm_close_nodes(int **ls, int *path, t_cord d)
-{
-	int		i;
-	int		s;
-	int		e;
-
-	s = d.s;
-	e = d.e;
-	i = e;
-	i = path[i];
-	if (i != s)
-	{
-		ls[i][path[i]] = 0;
-		ls[path[i]][i] = 0;
-	}
-}
-
-int		lm_path_size(int *path, int s, int e)
-{
-	int		i;
-	int		c;
-
-	c = 0;
-	i = e;
-	while (i != s)
-	{
-		i = path[i];
-		++c;
-	}
-	return (c);
-}
-
-int		lm_find_res(t_table *t)
-{
-	lm_find_best_flow(t);
-	return (1);
-}
-
-int		**d_arr_init(int size)
-{
-	int		**new;
-
-	if (!(new = (int**)malloc(sizeof(int*) * size)))
-		return (NULL);
-	return (new);
-}
-
-void	free_paths(int **paths, int size)
-{
-	int		i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (paths[i])
-			free(paths[i]);
-		++i;
-	}
-	free(paths);
-}
-
-
-void	lm_rewrite_split(int **final_split, int flow, int *splits)
-{
-	if (final_split)
-		free(final_split);
-	*final_split = arrintcpy(splits, flow);
-}
-
-void	lm_rewrite_paths(int i, int size,
-		int **tmp_paths, int **final_paths)
-{
-	int		j;
-
-	j = i;
-	i = 0;
-	while (i < j)
-	{
-		tmp_paths[i] = arrintcpy(final_paths[i], size);
-		++i;
-	}
-}
 
 int		lm_do_bfs(t_table *t, int flow, int *lens, int **final_paths)
 {
@@ -121,89 +37,57 @@ int		lm_do_bfs(t_table *t, int flow, int *lens, int **final_paths)
 	return (i);
 }
 
-int		lm_find_best_flow(t_table *t)
+void	lm_info_init(t_cur_tmp *info, int *flow, int *ret, int *printed)
 {
-	t_cord	d;
-	int		*lens;
-	int		*final_split;
-	int		**tmp_paths;
-	int		**final_paths;
-	int		*splits;
+	*printed = 0;
+	info->tmp_size = INT_MAX;
+	info->tmp_paths = NULL;
+	info->final_split = NULL;
+	info->size = INT_MAX - 1;
+	*flow = 1;
+	*ret = -1;
+}
+
+int		lm_calculate_info(t_cur_tmp *info, t_table *t, int flow, int *i)
+{
+	int		ret;
+
+	info->tmp_size = info->size;
+	info->lens = ft_newarr(flow, -1);
+	info->splits = ft_newarr(flow, 0);
+	info->final_paths = d_arr_init(flow);
+	*i = lm_do_bfs(t, flow, info->lens, info->final_paths);
+	ret = lm_count_ants_by_path(t->n_ants, flow, info->lens, info->splits);
+	info->size = (lm_path_size(info->final_paths[0],
+				t->id_start, t->id_end) - 1) / 2 + info->splits[0];
+	return (ret);
+}
+
+int		lm_find_res(t_table *t)
+{
+	t_cur_tmp info;
 	int		flow;
 	int		i;
-//	int		j;
 	int		ret;
-	int		size;
-	int		tmp_size;
+	int		printed;
 
-	tmp_size = INT_MAX;
-	tmp_paths = NULL;
-	final_split = NULL;
-	flow = 1;
-	d.e = t->id_end;
-	d.s = t->id_start;
+	lm_info_init(&info, &flow, &ret, &printed);
 	t->t_fls = fls_copy(t->fls, t->size * 2);
-	ret = -1;
-	size = INT_MAX - 1;
-	while (lm_edm_karp(t) && ret != 0 && tmp_size >= size)
+	while (lm_edm_karp(t) && ret != 0 && info.tmp_size >= info.size)
 	{
-		i = 0;
-		tmp_size = size;
-		lens = ft_newarr(flow, -1);
-		splits = ft_newarr(flow, 0);
-		final_paths = d_arr_init(flow);
-		i = lm_do_bfs(t, flow, lens, final_paths);
-		ret = lm_count_ants_by_path(t->n_ants, flow, lens, splits);
-		size = (lm_path_size(final_paths[0], t->id_start, t->id_end) - 1) / 2 + splits[0];
-		if ((ret == 0 && tmp_size == size) || (tmp_size < size))
-		{
-			if (tmp_paths)
-			{
-				if (final_split)
-					lm_print_final(t, final_split, tmp_paths, flow - 1);
-				else
-					lm_print_final(t, splits, tmp_paths, flow - 1);
-			}
-			else
-			{
-				if (final_split)
-					lm_print_final(t, final_split, final_paths, flow - 1);
-				else
-					lm_print_final(t, splits, final_paths, flow - 1);
-			}
-			ret = 0;
-		}
+		ret = lm_calculate_info(&info, t, flow, &i);
+		if ((ret == 0 && info.tmp_size == info.size) || (info.tmp_size < info.size))
+			printed = lm_print_it(&info, t, flow, &ret);
 		else 
-		{
-			lm_rewrite_split(&final_split, flow, splits);
-			/*
-			if (final_split)
-				free(final_split);
-			final_split = arrintcpy(splits, flow);
-			*/
-		}
-		if (tmp_paths)
-			free_paths(tmp_paths, flow - 1);
-		tmp_paths = d_arr_init(flow);
-		lm_rewrite_paths(i, t->size * 2, tmp_paths, final_paths);
+			lm_rewrite_split(&info, flow, info.splits);
+		free_paths(info.tmp_paths, flow - 1);
+		info.tmp_paths = d_arr_init(flow);
+		lm_rewrite_paths(i, t->size * 2, info.tmp_paths, info.final_paths);
 		lm_free_matrix(t->r_fls, t->size * 2);
-		free_paths(final_paths, flow);
-		free(lens);
-		free(splits);
+		lm_multi_free(info.lens, info.splits, info.final_paths, flow);
 		++flow;
 	}
-	if (ret == -1)
-		ft_error_nmsg(NO_PATH);
-	if (ret == 1)
-	{
-		if (final_split)
-			lm_print_final(t, final_split, tmp_paths, flow - 1);
-		else
-			lm_print_final(t, splits, tmp_paths, flow - 1);
-	}
-	if (final_split)
-		free(final_split);
-	if (tmp_paths)
-		free_paths(tmp_paths, flow - 1);
-	return (1);
+	lm_print_it_last(printed, flow, &info, t);
+	lm_multi_free(info.final_split, NULL, info.tmp_paths, flow - 1);
+	return (lm_isnt_error(ret));
 }

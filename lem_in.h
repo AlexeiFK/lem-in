@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/13 18:43:46 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/14 22:52:25 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,16 @@ typedef struct	s_table
 	char		**result;
 }				t_table;
 
-
+typedef struct	s_cur_tmp
+{
+	int			*lens;
+	int			*final_split;
+	int			*splits;
+	int			**final_paths;
+	int			**tmp_paths;
+	int			size;
+	int			tmp_size;
+}				t_cur_tmp;
 
 typedef struct	s_cord
 {
@@ -65,6 +74,8 @@ void	lm_free_nodes_arr(t_node **n, int size);
 void	lm_free_matrix(int **m, int size);
 void	lm_free_ls(char **m, int size);
 void	split_str_free(char **split, char *str);
+void	lm_multi_free(int *lens, int *splits, int **paths, int flow);
+void	free_paths(int **paths, int size);
 
 int		lm_read(t_table *t);
 int		lm_read_n_ants(t_table *t, char **split);
@@ -81,6 +92,7 @@ void	print_node(t_list *lst);
 void	ft_error_msg(void);
 void	ft_error_nmsg(int num);
 void	ft_error_free(char **split, char *str);
+int		lm_isnt_error(int ret);
 
 int		ft_strisdig(char *str);
 int		split_size(char **split);
@@ -106,11 +118,19 @@ int		lm_edm_karp(t_table *t);
 int		lm_count_ants_by_path(int as, int ps, int *rs, int *sps);
 
 int		lm_find_res(t_table *t);
-int		lm_find_best_flow(t_table *t);
 
 int		lm_r_flow_to_res(t_table *t);
 
 int		lm_path_size(int *res, int s, int e);
+void	lm_close_nodes(int **ls, int *path, t_cord d);
+int		lm_path_size(int *path, int s, int e);
+int		**d_arr_init(int size);
+void	lm_rewrite_split(t_cur_tmp *info, int flow, int *splits);
+void	lm_rewrite_paths(int i, int size,
+		int **tmp_paths, int **final_paths);
+int		lm_print_it(t_cur_tmp *info, t_table *t, int flow, int *ret);
+void	lm_print_it_last(int printed,
+		int flow, t_cur_tmp *info, t_table *t);
 
 int		lm_print_final(t_table *t, int *split, int **path, int lens);
 #endif
