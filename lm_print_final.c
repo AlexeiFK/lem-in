@@ -6,37 +6,13 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 14:21:03 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/13 18:43:48 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/14 23:06:42 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
 #include <stdlib.h>
-
-/*
-int		lm_get_next_id(int *path, int end)
-{
-	if (i != e)
-		return (path[i]);
-}
-*/
-/*
-int		lm_path_size(int *path, int s, int e)
-{
-	int		i;
-	int		c;
-
-	c = 0;
-	i = e;
-	while (i != s)
-	{
-		i = path[i];
-		++c;
-	}
-	return (c);
-}
-*/
 
 char	*new_ant_path(int ant, const char *name)
 {
@@ -76,6 +52,22 @@ int		one_path_one_ant(t_table *t, int *path, int ant, int n)
 	return (1);
 }
 
+char	**lm_new_empty_res(int size)
+{
+	char	**result;
+	int		i;
+
+	i = 0;
+	if (!(result = (char**)malloc(sizeof(char*) * size)))
+		return (NULL);
+	while (i < size)
+	{
+		result[i] = ft_strnew(1);
+		++i;
+	}
+	return (result);
+}
+
 char	**lm_create_res(t_table *t, int *split, int **paths, int flow)
 {
 	int		i;
@@ -84,15 +76,9 @@ char	**lm_create_res(t_table *t, int *split, int **paths, int flow)
 	int		ant;
 	char	**result;
 
-	i = 0;
 	size = (lm_path_size(paths[0], t->id_start, t->id_end) - 1) / 2 + split[0];
-	if (!(result = (char**)malloc(sizeof(char*) * size)))
+	if (!(result = lm_new_empty_res(size)))
 		return (NULL);
-	while (i < size)
-	{
-		result[i] = ft_strnew(1);
-		++i;
-	}
 	i = 0;
 	t->result = result;
 	ant = 1;

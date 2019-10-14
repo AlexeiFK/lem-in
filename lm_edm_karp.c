@@ -6,38 +6,13 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 20:28:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/11 22:00:17 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/14 23:36:17 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "lem_in.h"
 #include "libft.h"
-
-void			print_ints(int *res, int size)
-{
-	int		k;
-
-	k = 0;
-	while (k < size)
-	{
-		ft_printf("res[%d]=%d\n", k, res[k]);
-		++k;
-	}
-}
-
-int			is_es(int s, int e, int n1, int n2)
-{
-	if (n1 == s && n2 == (s + 1))
-		return (1);
-	if (n2 == s && n1 == (s + 1))
-		return (1);
-	if (n1 == e && n2 == (e - 1))
-		return (1);
-	if (n2 == e && n1 == (s - 1))
-		return (1);
-	return (0);
-}
 
 void		change_flow(int **fls, int *path, int s, int e)
 {
@@ -54,25 +29,6 @@ void		change_flow(int **fls, int *path, int s, int e)
 		i = path[i];
 	}
 }
-
-int			**fls_copy(int **src, int size)
-{
-	int		**tmpfls;
-	int		i;
-
-	i = 0;
-	tmpfls = (int**)malloc(sizeof(int*) * size);
-	if (!tmpfls)
-		return (NULL);
-	while (i < size)
-	{
-		tmpfls[i] = (int*)malloc(sizeof(int) * size);
-		ft_memcpy(tmpfls[i], src[i], sizeof(int) * size);
-		++i;
-	}
-	return (tmpfls);
-}
-
 
 void		lm_get_result_table(int **fls, int **res, int size)
 {
@@ -93,36 +49,6 @@ void		lm_get_result_table(int **fls, int **res, int size)
 	}
 }
 
-void		arrintset(int *res, int size, int set)
-{
-	int 	i;
-
-	i = 0;
-	while (i < size)
-	{
-		res[i] = set;
-		++i;
-	}
-}
-
-int			*arrintcpy(int *arr, int size)
-{
-	int		*new;
-	int		i;
-
-	if (!(new = (int*)malloc(sizeof(int) * size)))
-		return (NULL);
-	i = 0;
-//	ft_printf("size = %d\n", size);
-	while (i < size)
-	{
-//		ft_printf("new = %d, arr = %d, i = %d\n", new[i], arr[i], i);
-		new[i] = arr[i];
-		++i;
-	}
-	return (new);
-}
-
 int			lm_edm_karp(t_table *t)
 {
 	int		**tmpfls;
@@ -139,14 +65,12 @@ int			lm_edm_karp(t_table *t)
 	tmpfls = fls_copy(t->t_fls, size);
 	if (ft_bfs(t->fls, size, d, res))
 	{
-		change_flow(t->fls, res, d.s, d.e); //		lm_print_flow(t);
+		change_flow(t->fls, res, d.s, d.e);
 		arrintset(res, size, -1);
 		ret = 1;
 	}
 	free(res);
-//	ft_printf("alg is over\n");
 	lm_get_result_table(t->fls, tmpfls, size);
 	t->r_fls = tmpfls;
-//	lm_print_flow(t);
 	return (ret);
 }
