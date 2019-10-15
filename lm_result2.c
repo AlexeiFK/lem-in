@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 22:47:25 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/14 22:51:22 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 18:45:08 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int		lm_path_size(int *path, int s, int e)
 	return (c);
 }
 
-
 int		**d_arr_init(int size)
 {
 	int		**new;
@@ -55,8 +54,6 @@ int		**d_arr_init(int size)
 		return (NULL);
 	return (new);
 }
-
-
 
 void	lm_rewrite_split(t_cur_tmp *info, int flow, int *splits)
 {

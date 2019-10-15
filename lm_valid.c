@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 17:52:16 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 12:49:13 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 21:36:24 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int		number_of_ants(char **split)
 		if (ft_strisdig(split[0]) == 0)
 			return (-1);
 		n = ft_atoll(split[0]);
+		if (n <= 0)
+			return (-1);
 		if (n > INT_MAX || n < INT_MIN)
 			return (-1);
 	}

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/14 22:52:05 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 18:44:44 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,29 @@ int		lm_calculate_info(t_cur_tmp *info, t_table *t, int flow, int *i)
 
 int		lm_find_res(t_table *t)
 {
-	t_cur_tmp info;
-	int		flow;
-	int		i;
-	int		ret;
-	int		printed;
+	t_cur_tmp	inf;
+	int			flow;
+	int			i;
+	int			r;
+	int			printed;
 
-	lm_info_init(&info, &flow, &ret, &printed);
+	lm_info_init(&inf, &flow, &r, &printed);
 	t->t_fls = fls_copy(t->fls, t->size * 2);
-	while (lm_edm_karp(t) && ret != 0 && info.tmp_size >= info.size)
+	while (lm_edm_karp(t) && r != 0 && inf.tmp_size >= inf.size)
 	{
-		ret = lm_calculate_info(&info, t, flow, &i);
-		if ((ret == 0 && info.tmp_size == info.size) || (info.tmp_size < info.size))
-			printed = lm_print_it(&info, t, flow, &ret);
-		else 
-			lm_rewrite_split(&info, flow, info.splits);
-		free_paths(info.tmp_paths, flow - 1);
-		info.tmp_paths = d_arr_init(flow);
-		lm_rewrite_paths(i, t->size * 2, info.tmp_paths, info.final_paths);
+		r = lm_calculate_info(&inf, t, flow, &i);
+		if ((r == 0 && inf.tmp_size == inf.size) || (inf.tmp_size < inf.size))
+			printed = lm_print_it(&inf, t, flow, &r);
+		else
+			lm_rewrite_split(&inf, flow, inf.splits);
+		free_paths(inf.tmp_paths, flow - 1);
+		inf.tmp_paths = d_arr_init(flow);
+		lm_rewrite_paths(i, t->size * 2, inf.tmp_paths, inf.final_paths);
 		lm_free_matrix(t->r_fls, t->size * 2);
-		lm_multi_free(info.lens, info.splits, info.final_paths, flow);
+		lm_multi_free(inf.lens, inf.splits, inf.final_paths, flow);
 		++flow;
 	}
-	lm_print_it_last(printed, flow, &info, t);
-	lm_multi_free(info.final_split, NULL, info.tmp_paths, flow - 1);
-	return (lm_isnt_error(ret));
+	lm_print_it_last(printed, flow, &inf, t);
+	lm_multi_free(inf.final_split, NULL, inf.tmp_paths, flow - 1);
+	return (lm_isnt_error(r));
 }

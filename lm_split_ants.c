@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:07:34 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/13 18:49:29 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 18:39:50 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void		normalize_lens(int *lens, int size)
 {
 	int		i;
-	
+
 	i = 0;
 	while (i < size)
 	{

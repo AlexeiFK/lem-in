@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 14:49:31 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 15:35:45 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 22:06:35 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ int		lm_read_link(t_table *t, char **split)
 	l_split = is_valid_link(split);
 	if (l_split == NULL)
 		return (-1);
-	fill_link(t, l_split[0], l_split[1]);
+	if (fill_link(t, l_split[0], l_split[1]) == -1)
+	{
+		split_free(l_split);
+		return (-1);
+	}
 	split_free(l_split);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 14:21:03 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/14 23:06:42 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 23:56:07 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,6 @@ int		lm_print_final(t_table *t, int *split, int **paths, int flow)
 
 	result = lm_create_res(t, split, paths, flow); //malloc 
 	i = 0;
-	while (i < flow)
-	{
-		ft_printf("[%d]=%d\n", i, split[i]);
-		++i;
-	}
-	i = 0;
 	size = (lm_path_size(paths[0], t->id_start, t->id_end) - 1) / 2 + split[0];
 	while (i < size)
 	{
@@ -119,6 +113,13 @@ int		lm_print_final(t_table *t, int *split, int **paths, int flow)
 		i++;
 	}
 	free(result);
-	ft_printf("final_res:%d\n", size - 1);
+	i = 0;
+	while (i < flow && t->is_flag == 1)
+	{
+		ft_printf("[%d]=%d\n", i, split[i]);
+		++i;
+	}
+	if (t->is_flag == 1)
+		ft_printf("Final_res:%d\n", size - 1);
 	return (1);
 }

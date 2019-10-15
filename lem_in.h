@@ -6,18 +6,32 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/14 23:36:54 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 23:56:12 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
+
 # include "libft.h"
+
 # define C_START 1
 # define C_END 2
 # define C_COMMENT 3
 # define C_EOFF 4
+
+/*
+ ** Errors codes 
+*/
+
+# define DOUBLE_START 101
+# define DOUBLE_END 102
+# define NO_START_END 103
 # define NO_PATH 104
+# define NO_END 105
+# define NO_START 106
+# define WRONG_LINK 107
+# define READ_FAIL 108
 
 typedef struct	s_node
 {
@@ -41,6 +55,7 @@ typedef struct	s_table
 	int			id_start;
 	int			id_end;
 	char		**result;
+	int			is_flag;
 }				t_table;
 
 typedef struct	s_cur_tmp
@@ -91,7 +106,7 @@ void			print_node(t_list *lst);
 
 void			ft_error_msg(void);
 void			ft_error_nmsg(int num);
-void			ft_error_free(char **split, char *str);
+void			ft_error_free(char **split, char *str, int num);
 int				lm_isnt_error(int ret);
 
 int				ft_strisdig(char *str);
@@ -137,5 +152,6 @@ void			lm_print_it_last(int printed,
 				int flow, t_cur_tmp *info, t_table *t);
 
 int				lm_print_final(t_table *t, int *split, int **path, int lens);
+char			*new_ant_patn(int ant, const char *name);
 
 #endif

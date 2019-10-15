@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 21:19:23 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/05 17:35:55 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 22:07:00 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int		choose_read(t_table *t, int *flag, char **split, int *comm_tmp)
 {
 	if ((*flag) == 0)
 	{
-		ft_printf("read n_ants\n");
 		if (((*comm_tmp) == C_END) || ((*comm_tmp) == C_START))
 			return (-1);
 		if (lm_read_n_ants(t, split) == -1)
@@ -28,14 +27,12 @@ int		choose_read(t_table *t, int *flag, char **split, int *comm_tmp)
 	}
 	else if ((*flag) == 1)
 	{
-		ft_printf("read nodes\n");
 		if (((*flag) = lm_read_node(t, split, (*comm_tmp))) == -1)
 			return (-1);
 		(*comm_tmp) = 0;
 	}
 	else if ((*flag) == 2)
 	{
-		ft_printf("read links\n");
 		if ((*comm_tmp) == C_END || (*comm_tmp) == C_START)
 			return (-1);
 		if (lm_read_link(t, split) == -1)
@@ -50,7 +47,7 @@ int		comm_detect(char **split, char *str, int *comm_tmp)
 
 	comm = is_comm(split, str);
 	if (comm == -1)
-		ft_error_free(split, str);
+		ft_error_free(split, str, READ_FAIL);
 	if (comm == C_COMMENT)
 	{
 		split_str_free(split, str);
@@ -79,22 +76,24 @@ int		lm_read(t_table *t)
 	char	**split;
 	int		comm_tmp;
 	int		flag;
+	int		error;
 
 	comm_tmp = 0;
 	flag = 0;
 	str = NULL;
-	while (ft_gnl(0, &str, 0) > 0)
+	while ((error = ft_gnl(0, &str, 0)) > 0)
 	{
-		ft_printf("%s\n", str);
+		ft_putstr(str);
+		ft_putchar('\n');
 		split = ft_strsplit(str, ' ');
 		if (comm_detect(split, str, &comm_tmp))
 			continue ;
 		if (choose_read(t, &flag, split, &comm_tmp) == -1)
-			ft_error_free(split, str);
+			ft_error_free(split, str, READ_FAIL);
 		split_str_free(split, str);
 	}
 	free(str);
-	if (t->id_start == -1 || t->id_end == -1)
-		ft_error_msg();
+	if (error == -1)
+		return (-1);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 13:59:26 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/11 20:12:18 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/15 19:49:14 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,13 @@ int		fill_node(t_table *t, char **split, int id, int end_start)
 	new->x = ft_atoi(split[1]);
 	new->y = ft_atoi(split[2]);
 	new->is_end_start = end_start;
-	if (end_start == C_START) //TODO double start valid
+	if (end_start == C_START)
 		t->id_start = id;
-	if (end_start == C_END)//TODO double end valid
+	if (end_start == C_END)
 		t->id_end = id;
 	if ((nlist = ft_lstnew(new, sizeof(t_node))) == NULL)
 		return (-1);
-//	print_node(nlist);
 	free(new);
-//	new = (t_node*)(nlist->content);
-//	new->name = ft_strdup(split[0]);
 	ft_lstadd(&t->nl, nlist);
 	return (1);
 }
@@ -86,7 +83,8 @@ int		fill_link(t_table *t, char *name1, char *name2)
 	}
 	id1 = find_id(t, name1);
 	id2 = find_id(t, name2);
+	if (id1 == -1 || id2 == -1)
+		return (-1);
 	set_link(t, id1, id2);
-//	lm_print_table(t);
 	return (1);
 }
