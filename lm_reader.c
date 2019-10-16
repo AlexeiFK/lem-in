@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 21:19:23 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/15 22:07:00 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/16 19:55:05 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ int		choose_read(t_table *t, int *flag, char **split, int *comm_tmp)
 	return (0);
 }
 
-int		comm_detect(char **split, char *str, int *comm_tmp)
+int		comm_detect(char **split, char *str, int *comm_tmp, t_table *t)
 {
 	int		comm;
 
 	comm = is_comm(split, str);
 	if (comm == -1)
-		ft_error_free(split, str, READ_FAIL);
+		ft_error_free(split, str, READ_FAIL, t);
 	if (comm == C_COMMENT)
 	{
-		split_str_free(split, str);
 		if (((*comm_tmp) == C_END) || ((*comm_tmp) == C_START))
-			ft_error_msg();
+			ft_error_free(split, str, READ_FAIL_NODE, t);
+		split_str_free(split, str);
 		return (1);
 	}
 	if (comm == C_END)
@@ -86,10 +86,10 @@ int		lm_read(t_table *t)
 		ft_putstr(str);
 		ft_putchar('\n');
 		split = ft_strsplit(str, ' ');
-		if (comm_detect(split, str, &comm_tmp))
+		if (comm_detect(split, str, &comm_tmp, t))
 			continue ;
 		if (choose_read(t, &flag, split, &comm_tmp) == -1)
-			ft_error_free(split, str, READ_FAIL);
+			ft_error_free(split, str, READ_FAIL, t);
 		split_str_free(split, str);
 	}
 	free(str);

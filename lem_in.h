@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/15 23:56:12 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:03:00 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define NO_START 106
 # define WRONG_LINK 107
 # define READ_FAIL 108
+# define FT_MALLOC_ERR 109
+# define READ_FAIL_NODE 110
 
 typedef struct	s_node
 {
@@ -91,6 +93,7 @@ void			lm_free_ls(char **m, int size);
 void			split_str_free(char **split, char *str);
 void			lm_multi_free(int *lens, int *splits, int **paths, int flow);
 void			free_paths(int **paths, int size);
+void			lm_free_list_strs(t_list *list);
 
 int				lm_read(t_table *t);
 int				lm_read_n_ants(t_table *t, char **split);
@@ -106,7 +109,7 @@ void			print_node(t_list *lst);
 
 void			ft_error_msg(void);
 void			ft_error_nmsg(int num);
-void			ft_error_free(char **split, char *str, int num);
+void			ft_error_free(char **split, char *str, int num, t_table *t);
 int				lm_isnt_error(int ret);
 
 int				ft_strisdig(char *str);
@@ -152,6 +155,7 @@ void			lm_print_it_last(int printed,
 				int flow, t_cur_tmp *info, t_table *t);
 
 int				lm_print_final(t_table *t, int *split, int **path, int lens);
-char			*new_ant_patn(int ant, const char *name);
+int				is_start_to_end(t_table *t);
+char			*new_ant_path(int ant, const char *name);
 
 #endif
