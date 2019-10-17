@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 22:55:37 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/17 14:47:16 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/17 21:47:53 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		lm_print_special_res(t_table *t)
 			return (-1);
 		++ant;
 	}
+	ft_putchar('\n');
 	ft_putstr(result);
 	ft_putchar('\n');
 	free(result);
