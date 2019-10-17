@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:10:46 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/14 23:39:48 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/17 15:01:57 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "lem_in.h"
 #include "libft.h"
 
-void			print_ints(int *res, int size)
+void		print_ints(int *res, int size)
 {
 	int		k;
 
@@ -41,7 +41,7 @@ int			is_es(int s, int e, int n1, int n2)
 
 void		arrintset(int *res, int size, int set)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
 	while (i < size)

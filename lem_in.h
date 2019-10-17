@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/16 20:03:00 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:07:59 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define C_EOFF 4
 
 /*
- ** Errors codes 
+ ** Errors codes
 */
 
 # define DOUBLE_START 101
@@ -77,6 +77,14 @@ typedef struct	s_cord
 	int			e;
 }				t_cord;
 
+typedef struct	s_circ
+{
+	int			*buff;
+	int			size;
+	int			start_i;
+	int			end_i;
+}				t_circ;				
+
 int				**fls_copy(int **src, int size);
 
 int				is_es(int s, int e, int i, int j);
@@ -130,6 +138,11 @@ int				ft_is_empty_q(t_list *q);
 int				ft_dequeue_int(t_list **q);
 void			ft_enqueue_int(t_list **q, int id);
 
+t_circ			*ft_init_circ(int size, int num);
+void			ft_add_circ(t_circ *c, int num);
+int				ft_pop_circ(t_circ *c);
+int				ft_circ_is_empty(t_circ *c);
+
 int				*ft_newarr(int size, int set);
 int				*arrintcpy(int *src, int size);
 
@@ -155,6 +168,7 @@ void			lm_print_it_last(int printed,
 				int flow, t_cur_tmp *info, t_table *t);
 
 int				lm_print_final(t_table *t, int *split, int **path, int lens);
+void			lm_print_flag(int size, int flow, t_table *t, int *split);
 int				is_start_to_end(t_table *t);
 char			*new_ant_path(int ant, const char *name);
 

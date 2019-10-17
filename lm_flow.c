@@ -6,11 +6,12 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:03:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/09 21:57:33 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:41:36 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+#include <limits.h>
 #include <stdlib.h>
 #include <limits.h>
 
@@ -34,10 +35,10 @@ void	fill_flow_sqr(int i, int j, int **fl, int is_linked)
 		fl[in_i][out_j] = 1;
 	else if (is_linked == 0)
 		fl[out_i][in_j] = 1;
-	else if (is_linked == 100)
-	{							//TODO replace with INTMAX
-		fl[in_i][out_j] = 100;
-		fl[out_i][in_j] = 100;
+	else if (is_linked == INT_MAX)
+	{
+		fl[in_i][out_j] = INT_MAX;
+		fl[out_i][in_j] = INT_MAX;
 	}
 }
 
@@ -91,7 +92,6 @@ int		**create_flow(char **ls, int size, int start, int end)
 	new = init_flow(size);
 	if (!new)
 		return (NULL);
-	ft_printf("flow malloced\n");
 	i = 0;
 	while (i < size)
 	{
@@ -103,8 +103,8 @@ int		**create_flow(char **ls, int size, int start, int end)
 		}
 		++i;
 	}
-	fill_flow_sqr(start, start, new, 100);///TODO replace with INT_MAX
-	fill_flow_sqr(end, end, new, 100);///TODO replace with INT_MAX
+	fill_flow_sqr(start, start, new, INT_MAX);
+	fill_flow_sqr(end, end, new, INT_MAX);
 	return (new);
 }
 
@@ -112,9 +112,7 @@ int		lm_init_flow(t_table *t)
 {
 	t->fls = create_flow(t->ls, t->size,
 			t->id_start, t->id_end);
-	ft_printf("flow created\n");
 	if (!(t->fls))
 		return (-1);
-//	lm_print_flow(t);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 18:35:25 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/04 23:03:04 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/17 18:22:52 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,69 +14,40 @@
 #include <stdlib.h>
 #include "libft.h"
 
-void	ft_del_first(t_list **alst)
+t_circ	*ft_init_circ(int size, int num)
 {
-	t_list	*to_free;
-	t_list	*tmp;
+	t_circ *c;
 
-	if (!alst)
-		return ;
-	tmp = *alst;
-	if (tmp->next)
+	if (!(c = (t_circ*)malloc(sizeof(t_circ))))
+		return (NULL);
+	c->size = size;
+	c->start_i = 0;
+	c->end_i = 1;
+	if (!(c->buff = (int*)malloc(sizeof(int) * size)))
 	{
-		to_free = tmp;
-		//tmp = tmp->next;
-		*alst = (*alst)->next;
-		free(to_free->content);
-		free(to_free);
+		free(c);
+		return (NULL);
 	}
-	else
-	{
-		if (tmp)
-		{
-			free(tmp->content);
-			free(tmp);
-			*alst = NULL;
-		}
-	}
+	c->buff[0] = num;
+	return (c);
 }
 
-int		ft_is_empty_q(t_list *q)
+void	ft_add_circ(t_circ *c, int num)
 {
-	if (q == NULL)
-		return (1);
-	return (0);
+	c->buff[c->end_i] = num;
+	c->end_i = (c->end_i + 1) % c->size;
 }
 
-int		ft_dequeue_int(t_list **q)
+int		ft_pop_circ(t_circ *c)
 {
-	int		*ret;
-	int		num;
-	t_list	*tmp;
+	int		to_ret;
 
-	if (!(*q))
-		return (-1);
-	tmp = *q;
-	ret = (int*)(tmp->content);
-	//ft_printf("\nret = %lld, con_size = %d", *ret, tmp->content_size);
-	num = *ret;
-	ft_del_first(q);
-	//ft_printf("\nnum = %lld\n", num);
-	return (num);
+	to_ret = c->buff[c->start_i];
+	c->start_i = (c->start_i + 1) % c->size;
+	return (to_ret);
 }
 
-void	ft_enqueue_int(t_list **q, int id)
+int		ft_circ_is_empty(t_circ *c)
 {
-	t_list *new;
-
-//	ft_printf("nnn1 **q=%p, *q=%p\nf", q, *q);
-	new = ft_lstnew(&id, sizeof(int));
-	if (!(*q))
-	{
-		(*q) = new;
-		return ;
-	}
-//	ft_printf("nnn2\n");
-	ft_lstadd_l(q, new);
-//	ft_printf("nnn\n");
+	return (c->start_i == c->end_i);
 }

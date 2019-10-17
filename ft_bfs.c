@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 19:22:04 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/14 23:40:30 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/17 20:45:52 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,17 @@
 #include "libft.h"
 #include "lem_in.h"
 
-static void	q_del(void *mem, size_t s)
+static int	free_ret(t_circ *c, int ret)
 {
-	if (s && mem)
-		free(mem);
-}
-
-static int	free_ret(int *to_free, t_list **q, int ret)
-{
-	if (to_free)
-		free(to_free);
-	if (!ft_is_empty_q(*q))
-		ft_lstdel(q, q_del);
+	if (c)
+	{
+		free(c->buff);
+		free(c);
+	}
 	return (ret);
 }
 
-int		*ft_newarr(int size, int set)
+int			*ft_newarr(int size, int set)
 {
 	int		*new;
 	int		i;
@@ -47,38 +42,37 @@ int		*ft_newarr(int size, int set)
 	return (new);
 }
 
-int		ft_bfs(int **fls, int size, t_cord d, int *res)
+int			add_not_visited(int id, t_circ *c, int *res, int i)
 {
-	int		resik;
-	t_list	*q;
-	int		*visited;
+	ft_add_circ(c, i);
+	res[i] = id;
+	return (1);
+}
+
+int			ft_bfs(int **fls, int size, t_cord d, int *res)
+{
 	int		id;
 	int		i;
+	t_circ	*c;
 
-	resik = 0;
-	if ((visited = ft_newarr(size, 0)) == NULL)
+	if (!(c = ft_init_circ(size + 1, d.s)))
 		return (-1);
-	q = ft_lstnew(&(d.s), sizeof(int));
 	id = -1;
-	visited[d.s] = 1;
-	while (!ft_is_empty_q(q))
+	while (!ft_circ_is_empty(c))
 	{
-		id = ft_dequeue_int(&q);
+		id = ft_pop_circ(c);
 		if (id == d.e)
-			return (free_ret(visited, &q, 1));
+			return (free_ret(c, 1));
 		i = 0;
 		while (i < size)
 		{
-			if (fls[id][i] >= 1 && visited[i] == 0)
+			if (fls[id][i] >= 1 && res[i] == -1)
 			{
-				ft_enqueue_int(&q, i);
-				visited[i] = 1;
+				ft_add_circ(c, i);
 				res[i] = id;
-			}	
+			}
 			++i;
 		}
 	}
-	if (resik != d.e)
-		return (free_ret(visited, &q, 0));
-	return (0);
+	return (free_ret(c, 0));
 }

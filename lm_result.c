@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/15 18:44:44 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/17 20:05:54 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		lm_do_bfs(t_table *t, int flow, int *lens, int **final_paths)
 		final_paths[i] = arrintcpy(res, t->size * 2);
 		++i;
 		lm_close_nodes(t->r_fls, res, d);
+		arrintset(res, t->size * 2, -1);
 	}
 	free(res);
 	return (i);
