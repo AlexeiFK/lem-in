@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 13:59:26 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/15 19:49:14 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/18 21:28:42 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		fill_node(t_table *t, char **split, int id, int end_start)
 	t_list	*nlist;
 	t_node	*new;
 
+	if (is_duplicated_node(split[0], t->nl))
+		return (-1);
 	if ((new = (t_node*)malloc(sizeof(t_node))) == NULL)
 		return (-1);
 	new->id = id;

@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 14:49:31 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/15 22:06:35 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/18 21:08:52 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int		lm_read_node(t_table *t, char **split, int end_start)
 
 	if (is_valid_node(split) == 1)
 	{
-		fill_node(t, split, id, end_start);
+		if (fill_node(t, split, id, end_start) == -1)
+			return (-1);
 		++id;
 	}
 	else

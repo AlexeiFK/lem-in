@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 17:48:50 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/17 22:14:16 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/18 21:27:08 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	ft_error_free(char **split,
 	split_str_free(split, str);
 	ft_gnl(0, NULL, 1);
 	lm_free(t);
-	if (num == READ_FAIL_NODE && t->nl) //check double free
+	if (num == READ_FAIL_NODE && t->nl)
 	{
 		lm_free_list_strs(t->nl);
 		ft_lstdel(&t->nl, lm_delete_node);
 	}
-	if (num == READ_FAIL && t->nl) //check double free
+	if (num == READ_FAIL && t->nl)
 	{
 		lm_free_list_strs(t->nl);
 		ft_lstdel(&t->nl, lm_delete_node);

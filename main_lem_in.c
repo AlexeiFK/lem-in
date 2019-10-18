@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:16:24 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/16 19:42:43 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/18 22:33:47 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ int			main(int argc, char **argv)
 	t.is_flag = is_flag(argc, argv);
 	main_init_table(&t);
 	if (lm_read(&t) == -1)
+	{
+		lm_free(&t);
 		ft_error_nmsg(READ_FAIL);
+	}
 	main_error_free(&t);
 	lm_init_flow(&t);
 	t.id_start *= 2;

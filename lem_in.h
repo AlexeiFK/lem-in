@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/17 17:07:59 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/18 21:30:05 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,11 @@ typedef struct	s_circ
 	int			size;
 	int			start_i;
 	int			end_i;
-}				t_circ;				
+}				t_circ;
 
 int				**fls_copy(int **src, int size);
+
+int				is_duplicated_node(char *name, t_list *lst);
 
 int				is_es(int s, int e, int i, int j);
 void			print_ints(int *i, int size);

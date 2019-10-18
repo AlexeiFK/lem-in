@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:10:46 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/17 15:01:57 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/18 19:23:13 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int			**fls_copy(int **src, int size)
 {
 	int		**tmpfls;
 	int		i;
+	int		j;
 
 	i = 0;
 	tmpfls = (int**)malloc(sizeof(int*) * size);
@@ -79,7 +80,14 @@ int			**fls_copy(int **src, int size)
 	while (i < size)
 	{
 		tmpfls[i] = (int*)malloc(sizeof(int) * size);
-		ft_memcpy(tmpfls[i], src[i], sizeof(int) * size);
+		if (!tmpfls[i])
+			return (NULL);
+		j = 0;
+		while (j < size)
+		{
+			tmpfls[i][j] = src[i][j];
+			++j;
+		}
 		++i;
 	}
 	return (tmpfls);
