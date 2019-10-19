@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 20:28:20 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/15 22:38:42 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/19 19:07:05 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,47 @@ void		lm_get_result_table(int **fls, int **res, int size)
 	}
 }
 
+void		lm_refresh_table(int **r_fls, int **t_fls, int size)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			r_fls[i][j] = t_fls[i][j];
+			++j;
+		}
+		++i;
+	}
+}
+
+void		lm_get_result_table_(int **fls, int **res, int **orig, int size)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			if (orig[i][j] == 1 && fls[i][j] != 0)
+				res[i][j] = 0;
+			else
+				res[i][j] = orig[i][j];
+			++j;
+		}
+		++i;
+	}
+}
+
 int			lm_edm_karp(t_table *t)
 {
-	int		**tmpfls;
 	int		*res;
 	int		size;
 	t_cord	d;
@@ -62,7 +100,6 @@ int			lm_edm_karp(t_table *t)
 	d.s = t->id_start;
 	d.e = t->id_end;
 	res = ft_newarr(size, -1);
-	tmpfls = fls_copy(t->t_fls, size);
 	if (ft_bfs(t->fls, size, d, res))
 	{
 		change_flow(t->fls, res, d.s, d.e);
@@ -70,7 +107,6 @@ int			lm_edm_karp(t_table *t)
 		ret = 1;
 	}
 	free(res);
-	lm_get_result_table(t->fls, tmpfls, size);
-	t->r_fls = tmpfls;
+	lm_get_result_table_(t->fls, t->r_fls, t->t_fls, size);
 	return (ret);
 }

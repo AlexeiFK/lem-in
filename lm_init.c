@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 13:14:35 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/18 19:33:05 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/19 19:04:57 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,23 @@ int		lm_list_to_array(t_table *t)
 	ft_lstdel(&t->nl, lm_delete_node);
 	t->ns = new;
 	return (1);
+}
+
+int		**lm_new_table(int size)
+{
+	int		i;
+	int		**new;
+
+	i = 0;
+	if ((new = (int**)malloc(sizeof(int*) * size)) == NULL)
+		return (NULL);
+	while (i < size)
+	{
+		if ((new[i] = (int*)malloc(sizeof(int) * size)) == NULL)
+			return (NULL);
+		++i;
+	}
+	return (new);
 }
 
 int		lm_init_table(t_table *t)

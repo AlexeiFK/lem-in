@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:07:34 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/15 18:39:50 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/19 22:50:43 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int				lm_count_ants_by_path(int n_ants,
 		lens[min] += 1;
 		--n_ants;
 	}
-	if (split[n_paths - 1] == 0)
+	if (split[n_paths - 1] == 0 && split[n_paths - 2] == 0)
 		return (0);
 	return (1);
 }

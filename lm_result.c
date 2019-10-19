@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 21:01:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/17 20:05:54 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/19 21:45:47 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		lm_find_res(t_table *t)
 
 	lm_info_init(&inf, &flow, &r, &printed);
 	t->t_fls = fls_copy(t->fls, t->size * 2);
+	t->r_fls = lm_new_table(t->size * 2);
 	while (lm_edm_karp(t) && r != 0 && inf.tmp_size >= inf.size)
 	{
 		r = lm_calculate_info(&inf, t, flow, &i);
@@ -84,7 +85,6 @@ int		lm_find_res(t_table *t)
 		free_paths(inf.tmp_paths, flow - 1);
 		inf.tmp_paths = d_arr_init(flow);
 		lm_rewrite_paths(i, t->size * 2, inf.tmp_paths, inf.final_paths);
-		lm_free_matrix(t->r_fls, t->size * 2);
 		lm_multi_free(inf.lens, inf.splits, inf.final_paths, flow);
 		++flow;
 	}

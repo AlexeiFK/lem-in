@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:36:07 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/18 21:30:05 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/19 19:46:15 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,6 @@ int				lm_print_final(t_table *t, int *split, int **path, int lens);
 void			lm_print_flag(int size, int flow, t_table *t, int *split);
 int				is_start_to_end(t_table *t);
 char			*new_ant_path(int ant, const char *name);
+int				**lm_new_table(int size);
 
 #endif
