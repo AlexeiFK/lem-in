@@ -6,7 +6,7 @@
 /*   By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 21:19:23 by rjeor-mo          #+#    #+#             */
-/*   Updated: 2019/10/19 19:44:46 by rjeor-mo         ###   ########.fr       */
+/*   Updated: 2019/10/20 17:59:49 by rjeor-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,10 @@ int		comm_detect(char **split, char *str, int *comm_tmp, t_table *t)
 		split_str_free(split, str);
 		return (1);
 	}
-	if (comm == C_END)
+	if (comm == C_END || comm == C_START)
 	{
-		split_str_free(split, str);
-		(*comm_tmp) = comm;
-		return (1);
-	}
-	if (comm == C_START)
-	{
+		if (((*comm_tmp) == C_END) || ((*comm_tmp) == C_START))
+			ft_error_free(split, str, READ_FAIL_NODE, t);
 		split_str_free(split, str);
 		(*comm_tmp) = comm;
 		return (1);

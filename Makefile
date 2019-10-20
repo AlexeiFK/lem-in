@@ -6,7 +6,7 @@
 #    By: rjeor-mo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/24 22:08:26 by rjeor-mo          #+#    #+#              #
-#    Updated: 2019/10/18 23:06:08 by rjeor-mo         ###   ########.fr        #
+#    Updated: 2019/10/20 18:58:04 by rjeor-mo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ $(NAME): $(OBJ) $(HEADERS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
 
 %.o: %.c $(HEADERS)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	@$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
 	$(RM) $(OBJ)
